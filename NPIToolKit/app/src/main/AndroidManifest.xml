@@ -18,6 +18,51 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".QRGPSPoint"
+            android:label="@string/title_activity_qrgpspoint"
+            android:parentActivityName=".ToolKitMenu"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.alejandros.npitoolkit.ToolKitMenu" />
+        </activity>
+        <activity
+            android:name=".VoiceCompass"
+            android:label="@string/title_activity_voice_compass"
+            android:parentActivityName=".ToolKitMenu"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.alejandros.npitoolkit.ToolKitMenu" />
+        </activity>
+        <activity
+            android:name=".GesturePhoto"
+            android:label="@string/title_activity_gesture_photo"
+            android:parentActivityName=".ToolKitMenu"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.alejandros.npitoolkit.ToolKitMenu" />
+        </activity>
+        <activity
+            android:name=".MovementSound"
+            android:label="@string/title_activity_movement_sound"
+            android:parentActivityName=".ToolKitMenu"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.alejandros.npitoolkit.ToolKitMenu" />
+        </activity>
+        <activity
+            android:name=".Surprise"
+            android:label="@string/title_activity_surprise"
+            android:parentActivityName=".ToolKitMenu"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.alejandros.npitoolkit.ToolKitMenu" />
+        </activity>
     </application>
 
 </manifest>

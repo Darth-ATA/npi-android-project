@@ -1,5 +1,6 @@
 package com.alejandros.npitoolkit;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -17,21 +18,12 @@ public class ToolKitMenu extends AppCompatActivity {
         setContentView(R.layout.activity_tool_kit_menu);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_tool_kit_menu, menu);
+        // getMenuInflater().inflate(R.menu.menu_tool_kit_menu, menu);
         return true;
     }
 
@@ -48,5 +40,27 @@ public class ToolKitMenu extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    // Differents activities to execute
+    public void goToVoiceCompass(View view){
+        Intent intent = new Intent(this, VoiceCompass.class);
+        startActivity(intent);
+    }
+    public void goToQrGpsPoint(View view){
+        Intent intent = new Intent(this, QRGPSPoint.class);
+        startActivity(intent);
+    }
+    public void goToGesturePhoto(View view){
+        Intent intent = new Intent(this, GesturePhoto.class);
+        startActivity(intent);
+    }
+    public void goToMovementSound(View view){
+        Intent intent = new Intent(this, MovementSound.class);
+        startActivity(intent);
+    }
+    public void goToSurprise(View view){
+        Intent intent = new Intent(this, Surprise.class);
+        startActivity(intent);
     }
 }

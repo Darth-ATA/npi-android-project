@@ -2,4 +2,13 @@
     <string name="app_name">NPIToolKit</string>
     <string name="action_settings">Settings</string>
     <string name="button_voice_compass">Voice Compass</string>
+    <string name="button_gps_qr_point">GPS QR Point</string>
+    <string name="button_gesture_photo">Gesture Photo</string>
+    <string name="button_movement_sound">Movement Sound</string>
+    <string name="button_surprise">Surprise</string>
+    <string name="title_activity_qrgpspoint">QRGPSPoint</string>
+    <string name="title_activity_voice_compass">VoiceCompass</string>
+    <string name="title_activity_gesture_photo">GesturePhoto</string>
+    <string name="title_activity_movement_sound">MovementSound</string>
+    <string name="title_activity_surprise">Surprise</string>
 </resources>

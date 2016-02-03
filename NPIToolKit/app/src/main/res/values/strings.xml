@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">NPIToolKit</string>
+    <string name="action_settings">Settings</string>
+    <string name="button_voice_compass">Voice Compass</string>
+</resources>

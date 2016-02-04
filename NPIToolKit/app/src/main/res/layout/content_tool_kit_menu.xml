@@ -15,28 +15,33 @@
     >
 
     <Button
+        android:id="@+id/VoiceCompassButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/button_voice_compass"
-        android:onClick="goToVoiceCompass"></Button>
+        android:onClick="buttonOnClick"></Button>
     <Button
+        android:id="@+id/QrGpsPointButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/button_gps_qr_point"
-        android:onClick="goToQrGpsPoint"></Button>
+        android:onClick="buttonOnClick"></Button>
     <Button
+        android:id="@+id/GesturePhotoButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/button_gesture_photo"
-        android:onClick="goToGesturePhoto"></Button>
+        android:onClick="buttonOnClick"></Button>
     <Button
+        android:id="@+id/MovementSoundButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/button_movement_sound"
-        android:onClick="goToMovementSound"></Button>
+        android:onClick="buttonOnClick"></Button>
     <Button
+        android:id="@+id/SurpriseButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/button_surprise"
-        android:onClick="goToSurprise"></Button>
+        android:onClick="buttonOnClick"></Button>
 </LinearLayout>

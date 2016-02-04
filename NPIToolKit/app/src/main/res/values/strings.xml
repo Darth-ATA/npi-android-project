@@ -11,4 +11,5 @@
     <string name="title_activity_gesture_photo">GesturePhoto</string>
     <string name="title_activity_movement_sound">MovementSound</string>
     <string name="title_activity_surprise">Surprise</string>
+    <string name="scan_QR">ScanQR</string>
 </resources>

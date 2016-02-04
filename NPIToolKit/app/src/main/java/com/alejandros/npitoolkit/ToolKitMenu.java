@@ -43,24 +43,26 @@ public class ToolKitMenu extends AppCompatActivity {
     }
 
     // Differents activities to execute
-    public void goToVoiceCompass(View view){
-        Intent intent = new Intent(this, VoiceCompass.class);
-        startActivity(intent);
-    }
-    public void goToQrGpsPoint(View view){
-        Intent intent = new Intent(this, QRGPSPoint.class);
-        startActivity(intent);
-    }
-    public void goToGesturePhoto(View view){
-        Intent intent = new Intent(this, GesturePhoto.class);
-        startActivity(intent);
-    }
-    public void goToMovementSound(View view){
-        Intent intent = new Intent(this, MovementSound.class);
-        startActivity(intent);
-    }
-    public void goToSurprise(View view){
-        Intent intent = new Intent(this, Surprise.class);
+    public void buttonOnClick(View view){
+        Intent intent = new Intent();
+        switch(view.getId())
+        {
+            case R.id.VoiceCompassButton:
+                intent = new Intent(this, VoiceCompass.class);
+                break;
+            case R.id.QrGpsPointButton:
+                intent = new Intent(this, QRGPSPoint.class);
+                break;
+            case R.id.GesturePhotoButton:
+                intent = new Intent(this, GesturePhoto.class);
+                break;
+            case R.id.MovementSoundButton:
+                intent = new Intent(this, MovementSound.class);
+                break;
+            case R.id.SurpriseButton:
+                intent = new Intent(this, Surprise.class);
+                break;
+        }
         startActivity(intent);
     }
 }

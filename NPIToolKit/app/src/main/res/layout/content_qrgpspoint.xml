@@ -11,19 +11,19 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.alejandros.npitoolkit.QRGPSPoint"
     tools:showIn="@layout/activity_qrgpspoint">
-    <Button android:id="@+id/ScanButton"
+    <Button android:id="@+id/scan_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:text="@string/scan_QR"
-        android:onClick="scanQR"/>
+        />
     <TextView
         android:id="@+id/scan_format"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textIsSelectable="true"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/ScanButton"
+        android:layout_below="@id/scan_button"
         />
     <TextView
         android:id="@+id/scan_content"

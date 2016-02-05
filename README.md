@@ -3,6 +3,9 @@ A little repository for the "Nuevos Paradigmas de Información" apps development
 
 We are using Android Studio as IDE.
 
+## QrGPSPoint
+For his developemt it decides to use a bridge withing the app and another app that scan the QR code. Using the classes **IntentIntegrator.java** and **IntentResult.java** provided by the library used **ZXing** permits the user scan the desired QR with an external application that he has installed before or the app will claim him to install it.
+
 ## References
 ### Get Started
 http://developer.android.com/training/index.html

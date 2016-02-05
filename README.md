@@ -32,3 +32,8 @@ http://developer.android.com/training/index.html
 - http://stackoverflow.com/questions/27571530/zxing-scanner-android-studio/27573877#27573877
 - http://stackoverflow.com/questions/16433860/how-to-use-zxing-library-wihtout-installing-barcodescanner-app
 - http://stackoverflow.com/questions/10407159/how-to-manage-startactivityforresult-on-android/10407371#10407371
+
+### GesturePhoto
+https://bitbucket.org/haibison/android-lockpattern/wiki/Quick-Use
+http://stackoverflow.com/questions/3687315/deleting-shared-preferences
+http://stackoverflow.com/questions/8034127/how-to-remove-some-key-value-pair-from-sharedpreferences

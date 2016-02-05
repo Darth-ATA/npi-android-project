@@ -11,15 +11,20 @@ For his developemt it decides to use a bridge withing the app and another app th
 http://developer.android.com/training/index.html
 
 ### Qr
+
 - http://examples.javacodegeeks.com/android/android-barcode-and-qr-scanner-example/
 - http://code.tutsplus.com/tutorials/android-sdk-create-a-barcode-reader--mobile-17162
+
 #### GitHub
+
 - https://github.com/zxing/zxing/wiki/Scanning-Via-Intent
 - https://github.com/zxing/zxing
 - https://github.com/journeyapps/zxing-android-embedded#custom-layout
+
 #### SourceForge
 - http://sourceforge.net/p/zbar/news/2012/03/zbar-android-sdk-version-01-released/
 - http://sourceforge.net/projects/zbar/?source=typ_redirect
+
 #### StackOverflow
 - http://stackoverflow.com/questions/16080181/qr-code-reading-with-camera-android
 - http://stackoverflow.com/questions/29159104/how-to-integrate-zxing-barcode-scanner-without-installing-the-actual-zxing-app

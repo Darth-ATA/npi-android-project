@@ -12,4 +12,17 @@
     tools:context="com.alejandros.npitoolkit.GesturePhoto"
     tools:showIn="@layout/activity_gesture_photo">
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create pattern"
+        android:id="@+id/createPattern"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Insert pattern"
+        android:id="@+id/insertPattern"
+        android:layout_below="@id/createPattern"/>
+
 </RelativeLayout>

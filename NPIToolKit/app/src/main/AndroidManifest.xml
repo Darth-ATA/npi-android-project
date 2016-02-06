@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.alejandros.npitoolkit">
 
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-feature android:name="android.hardware.camera" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -63,6 +68,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.alejandros.npitoolkit.ToolKitMenu" />
         </activity>
+        <activity android:name=".CameraActivity"></activity>
     </application>
 
 </manifest>

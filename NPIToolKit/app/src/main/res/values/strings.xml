@@ -12,4 +12,7 @@
     <string name="title_activity_movement_sound">MovementSound</string>
     <string name="title_activity_surprise">Surprise</string>
     <string name="scan_QR">ScanQR</string>
+    <string name="recognition">Recognice Voice</string>
+    <string name="compass_data">Heading: 0.0</string>
+    <string name="compass_description">Little image that points the direction</string>
 </resources>

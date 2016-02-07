@@ -16,7 +16,6 @@ import com.google.zxing.integration.android.IntentResult;
 public class QRGPSPoint extends AppCompatActivity implements View.OnClickListener {
 
     static final String ACTION_SCAN = "com.google.zxing.client.android.SCAN";
-    private Button scanBtn;
     private TextView formatTxt, contentTxt;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -27,21 +26,15 @@ public class QRGPSPoint extends AppCompatActivity implements View.OnClickListene
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);  //Nos hace volver atrás
 
-        scanBtn = (Button)findViewById(R.id.scan_button);
         formatTxt = (TextView)findViewById(R.id.scan_format);
         contentTxt = (TextView)findViewById(R.id.scan_content);
-
-        scanBtn.setOnClickListener(this);
-
     }
 
+    //respond to clicks
     public void onClick(View view){
-        //respond to clicks
-        if(view.getId()==R.id.scan_button){
-            //scan
-            IntentIntegrator scanIntegrator = new IntentIntegrator(this);
-            scanIntegrator.initiateScan();
-        }
+        //scan
+        IntentIntegrator scanIntegrator = new IntentIntegrator(this);
+        scanIntegrator.initiateScan();
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent){

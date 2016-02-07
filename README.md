@@ -3,6 +3,8 @@ A little repository for the "Nuevos Paradigmas de Información" apps development
 
 We are using Android Studio as IDE.
 
+## VoiceCompass
+
 ## QrGPSPoint
 For his developemt it decides to use a bridge withing the app and another app that scan the QR code. Using the classes **IntentIntegrator.java** and **IntentResult.java** provided by the library used **ZXing** permits the user scan the desired QR with an external application that he has installed before or the app will claim him to install it.
 
@@ -20,7 +22,11 @@ After three seconds of entering the right pattern, it takes a photo and storaged
 [Intent](http://developer.android.com/intl/es/reference/android/content/Intent.html)
 [Log](http://developer.android.com/intl/es/reference/android/util/Log.html)
 [Context](http://developer.android.com/intl/es/reference/android/content/Context.html)
+### VoiceCompass
+[SensorManager](http://developer.android.com/intl/es/reference/android/hardware/SensorManager.html)
 
+http://stackoverflow.com/questions/20497087/manifest-xml-when-using-sensors
+http://www.codingforandroid.com/2011/01/using-orientation-sensors-simple.html
 ### Qr
 
 - http://examples.javacodegeeks.com/android/android-barcode-and-qr-scanner-example/

@@ -1,5 +1,6 @@
 package com.alejandros.npitoolkit;
 
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -10,6 +11,7 @@ import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Compass extends AppCompatActivity implements SensorEventListener {
 
@@ -27,7 +29,7 @@ public class Compass extends AppCompatActivity implements SensorEventListener {
     private float[] orientation = new float[3];
 
     private float previusOrientation = 180f;
-    private float providedOrientation = 0;
+    private float providedOrientation;
 
     private int errorMargin;
 
@@ -36,7 +38,15 @@ public class Compass extends AppCompatActivity implements SensorEventListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_voice_compass);
+        setContentView(R.layout.activity_compass);
+
+        // Receives the message of VoiceCompass
+        Intent intent = getIntent();
+        String message = intent.getStringExtra(VoiceCompass.EXTRA_MESSAGE);
+
+        // Splits the data of the message
+        providedOrientation = calculateProvidedOrientation(message);
+        errorMargin = calculateErrorMargin(message.replaceAll("[^0-9]",""));
 
         // our compass image
         image = (ImageView) findViewById(R.id.imageViewCompass);
@@ -67,7 +77,7 @@ public class Compass extends AppCompatActivity implements SensorEventListener {
     }
 
     @Override
-    // Esta función necesita estar definida aunque no es necesario implementarla en nuestro caso
+    // Not used but must be implemented
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
     }
 
@@ -106,6 +116,7 @@ public class Compass extends AppCompatActivity implements SensorEventListener {
                     -(deviceOrientation+providedOrientation),
                     Animation.RELATIVE_TO_SELF, 0.5f,
                     Animation.RELATIVE_TO_SELF, 0.5f);
+
             // how long the animation will take place
             animation.setDuration(210);
 
@@ -121,23 +132,25 @@ public class Compass extends AppCompatActivity implements SensorEventListener {
         }
     }
 
+    // Translate the words in degrees
     protected float calculateProvidedOrientation(String message){
         if (message.startsWith("north") || message.startsWith("norte")){
             return 0;
-        }
-        else if(message.startsWith("south") || message.startsWith("sur")){
+        }else if(message.startsWith("east") || message.startsWith("este")){
+            return 90;
+        }else if(message.startsWith("south") || message.startsWith("sur")){
             return 180;
-        }
-        else
+        }else if(message.startsWith("west") || message.startsWith("oeste"))
+            return 270;
+        else{
+            Toast.makeText(this, "You have to say something like: north 10 or norte 10", Toast.LENGTH_LONG).show();
             return 0;
+        }
     }
 
+    // Translate the words in number
     protected int calculateErrorMargin(String message){
-        return 10;
+        return Integer.parseInt(message);
     }
 
-    protected boolean itsRightOrientation(float deviceOrientation){
-        return providedOrientation - errorMargin/2 <= deviceOrientation &&
-                deviceOrientation <= providedOrientation + errorMargin/2;
-    }
 }

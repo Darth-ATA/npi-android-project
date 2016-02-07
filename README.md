@@ -22,11 +22,20 @@ After three seconds of entering the right pattern, it takes a photo and storaged
 [Intent](http://developer.android.com/intl/es/reference/android/content/Intent.html)
 [Log](http://developer.android.com/intl/es/reference/android/util/Log.html)
 [Context](http://developer.android.com/intl/es/reference/android/content/Context.html)
+
+https://docs.oracle.com/javase/1.5.0/docs/guide/language/foreach.html
 ### VoiceCompass
 [SensorManager](http://developer.android.com/intl/es/reference/android/hardware/SensorManager.html)
+[RecognizerIntent](http://developer.android.com/intl/es/reference/android/speech/RecognizerIntent.html)
+[SpeechRecognizer](http://developer.android.com/intl/es/reference/android/speech/SpeechRecognizer.html)
 
 http://stackoverflow.com/questions/20497087/manifest-xml-when-using-sensors
 http://www.codingforandroid.com/2011/01/using-orientation-sensors-simple.html
+http://www.jameselsey.co.uk/blogs/techblog/android-how-to-implement-voice-recognition-a-nice-easy-tutorial/
+http://www.javacodegeeks.com/2012/08/android-voice-recognition-tutorial.html
+https://www.learn2crack.com/2013/12/android-speech-recognition-example.html
+http://stackoverflow.com/questions/1102891/how-to-check-if-a-string-is-numeric-in-java
+http://stackoverflow.com/questions/10734989/extract-numbers-from-an-alpha-numeric-string-using-android
 ### Qr
 
 - http://examples.javacodegeeks.com/android/android-barcode-and-qr-scanner-example/

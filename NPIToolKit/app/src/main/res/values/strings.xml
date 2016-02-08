@@ -15,4 +15,5 @@
     <string name="recognition">Recognice Voice</string>
     <string name="compass_data">Heading: 0.0</string>
     <string name="compass_description">Little image that points the direction</string>
+    <string name="movement_sound">May the force be with you.</string>
 </resources>

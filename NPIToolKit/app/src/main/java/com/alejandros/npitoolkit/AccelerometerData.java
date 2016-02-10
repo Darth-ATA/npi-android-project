@@ -5,12 +5,10 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
-import com.alejandros.npitoolkit.MovementSound;
-
 /*
  * Clase que maneja el acelerómetro.
  */
-public class AcelerometroData implements SensorEventListener {
+public class AccelerometerData implements SensorEventListener {
     private final SensorManager sensorManager;
     private final Sensor acelerometro;
     private final MovementSound mainActivity;
@@ -29,7 +27,7 @@ public class AcelerometroData implements SensorEventListener {
      *    que esta disponible solo en el contexto (esto es, en la actividad MainActivity)
      *  - mainActivity es necesario para llamar a funciones que están definidas allí
      */
-    public AcelerometroData(SensorManager sensorManager, MovementSound mainActivity) {
+    public AccelerometerData(SensorManager sensorManager, MovementSound mainActivity) {
         this.sensorManager = sensorManager;
         acelerometro = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         this.mainActivity = mainActivity;
@@ -78,8 +76,13 @@ public class AcelerometroData implements SensorEventListener {
              * activará el sonido
              */
             // TODO PERFILAR CONDICION
-            if (aceleracionLineal[0] > aceleracionMinima){
-                mainActivity.reproducirSonidoYAnimacion();
+            mainActivity.fijarTextoAceleracion(aceleracionLineal);
+            if (Math.abs(aceleracionLineal[1]) > aceleracionMinima*2){
+                mainActivity.lightSaberOn();
+            }
+            if(Math.abs(aceleracionLineal[0]) > aceleracionMinima*0.1 ||
+               Math.abs(aceleracionLineal[2]) > aceleracionMinima*0.1){
+                mainActivity.lightSaberSwing();
             }
         }
     }

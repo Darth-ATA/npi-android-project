@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvHeading"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/compass"
+        android:src="@drawable/arrow"
         android:contentDescription="@string/compass_description"
         />
 

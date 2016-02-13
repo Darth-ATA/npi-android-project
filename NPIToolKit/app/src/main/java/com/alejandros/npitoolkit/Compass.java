@@ -1,6 +1,7 @@
 package com.alejandros.npitoolkit;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -118,10 +119,11 @@ public class Compass extends AppCompatActivity implements SensorEventListener {
             boolean rightHeading = isInTheRightDirection(deviceOrientation);
 
             if(rightHeading) {
-                image.setBackgroundColor(0xFFFF0000);
+                int green = Color.parseColor("#008000"); //Green colour
+                image.setColorFilter(green);
             }
             else{
-                image.setBackgroundColor(0xFFFFFFFF);
+                image.clearColorFilter();
             }
 
             RotateAnimation animation = new RotateAnimation(

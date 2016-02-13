@@ -5,8 +5,10 @@ import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MovementSound extends AppCompatActivity {
     private AccelerometerData acelerometro;
@@ -24,6 +26,7 @@ public class MovementSound extends AppCompatActivity {
     boolean isLightSaberOn = false;
 
     long prevTime;
+    long prevTimeSwing;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +56,7 @@ public class MovementSound extends AppCompatActivity {
 //        sound_lightSaberIdle = MediaPlayer.create(this, R.raw.light_saber_idle);
 
         prevTime = System.currentTimeMillis();
+        prevTimeSwing = prevTime;
     }
 
     protected void onResume() {
@@ -78,7 +82,7 @@ public class MovementSound extends AppCompatActivity {
     // en el eje X supera un mínimo.
     public void lightSaberOn(){
         long difference = System.currentTimeMillis() - prevTime;
-
+        Log.d("Diferences", System.currentTimeMillis() + " " + prevTime);
         if(difference > 1000) {
             prevTime = System.currentTimeMillis();
             if (!isLightSaberOn) {
@@ -98,11 +102,11 @@ public class MovementSound extends AppCompatActivity {
     }
 
     public void lightSaberSwing(){
-        long difference = System.currentTimeMillis() - prevTime;
+        long difference = System.currentTimeMillis() - prevTimeSwing;
 
-        if(difference > 500) {
-            prevTime = System.currentTimeMillis();
-            if (isLightSaberOn) {
+        if(isLightSaberOn) {
+            if (difference > 500) {
+                prevTimeSwing = System.currentTimeMillis();
                 sound_lightSaberSwing.start();
             }
         }

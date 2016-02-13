@@ -5,8 +5,10 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
@@ -42,11 +44,11 @@ public class Compass extends AppCompatActivity implements SensorEventListener {
 
         // Receives the message of VoiceCompass
         Intent intent = getIntent();
-        String message = intent.getStringExtra(VoiceCompass.EXTRA_MESSAGE);
+        int[] orientation_error = intent.getIntArrayExtra(VoiceCompass.EXTRA_MESSAGE);
 
         // Splits the data of the message
-        providedOrientation = calculateProvidedOrientation(message);
-        errorMargin = calculateErrorMargin(message.replaceAll("[^0-9]",""));
+        providedOrientation = orientation_error[0];
+        errorMargin = orientation_error[1];
 
         // our compass image
         image = (ImageView) findViewById(R.id.imageViewCompass);
@@ -58,6 +60,8 @@ public class Compass extends AppCompatActivity implements SensorEventListener {
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         accelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         magnetometer = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+
+
     }
 
     @Override
@@ -111,9 +115,18 @@ public class Compass extends AppCompatActivity implements SensorEventListener {
             // Azimut to degrees
             float deviceOrientation = (float)(Math.toDegrees(azimut)+360)%360;
 
+            boolean rightHeading = isInTheRightDirection(deviceOrientation);
+
+            if(rightHeading) {
+                image.setBackgroundColor(0xFFFF0000);
+            }
+            else{
+                image.setBackgroundColor(0xFFFFFFFF);
+            }
+
             RotateAnimation animation = new RotateAnimation(
                     previusOrientation,
-                    -(deviceOrientation+providedOrientation),
+                    -(deviceOrientation-providedOrientation),
                     Animation.RELATIVE_TO_SELF, 0.5f,
                     Animation.RELATIVE_TO_SELF, 0.5f);
 
@@ -123,34 +136,37 @@ public class Compass extends AppCompatActivity implements SensorEventListener {
             // set the animation after the end of the reservation status
             animation.setFillAfter(true);
 
-            tvHeading.setText("Heading: " + Float.toString(deviceOrientation + providedOrientation) + "degrees");
+            tvHeading.setText("Heading: " + Float.toString((deviceOrientation-providedOrientation+360)%360) + "degrees. " + Boolean.toString(rightHeading));
 
             // Start the animation
             image.startAnimation(animation);
 
-            previusOrientation = -(deviceOrientation+providedOrientation);
+            previusOrientation = -(deviceOrientation-providedOrientation);
         }
     }
 
-    // Translate the words in degrees
-    protected float calculateProvidedOrientation(String message){
-        if (message.startsWith("north") || message.startsWith("norte")){
-            return 0;
-        }else if(message.startsWith("east") || message.startsWith("este")){
-            return 90;
-        }else if(message.startsWith("south") || message.startsWith("sur")){
-            return 180;
-        }else if(message.startsWith("west") || message.startsWith("oeste"))
-            return 270;
-        else{
-            Toast.makeText(this, "You have to say something like: north 10 or norte 10", Toast.LENGTH_LONG).show();
-            return 0;
+    public boolean isInTheRightDirection(float deviceOrientation){
+        Log.d("ORI", Float.toString(deviceOrientation));
+        Log.d("PRO-", Float.toString((providedOrientation-errorMargin+360)%360));
+        Log.d("PRO+", Float.toString((providedOrientation+errorMargin+360)%360));
+
+        // When you have to point the north has to change the conditions
+        if(providedOrientation == 0){
+            if((deviceOrientation >= (360 - errorMargin)) ||
+               (deviceOrientation <= errorMargin)){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        else {
+            if (((deviceOrientation >= (providedOrientation - errorMargin + 360) % 360)) &&
+                 (deviceOrientation <= (providedOrientation + errorMargin + 360) % 360)) {//Math.abs(deviceOrientation - providedOrientation) <= errorMargin){
+                return true;
+            } else {
+                return false;
+            }
         }
     }
-
-    // Translate the words in number
-    protected int calculateErrorMargin(String message){
-        return Integer.parseInt(message);
-    }
-
 }

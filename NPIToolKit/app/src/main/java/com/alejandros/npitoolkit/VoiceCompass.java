@@ -64,9 +64,15 @@ public class VoiceCompass extends AppCompatActivity {
 
             Toast.makeText(this, "Recognized text: " + message, Toast.LENGTH_LONG).show();
 
+            int orientation = calculateProvidedOrientation(message);
+            int error = calculateErrorMargin(message);
+            int[] orientation_error = {orientation, error};
+
+            //Toast.makeText(this,"El error reconocido es:" + Integer.toString(error), Toast.LENGTH_LONG).show();
+
             if(checkMessage(message)){
                 Intent intent = new Intent(this, Compass.class);
-                intent.putExtra(EXTRA_MESSAGE, message);
+                intent.putExtra(EXTRA_MESSAGE, orientation_error);
                 startActivity(intent);
             }else {
                 Toast.makeText(this, "Have to say something like: " + "north 10 or norte 10", Toast.LENGTH_LONG).show();
@@ -86,5 +92,26 @@ public class VoiceCompass extends AppCompatActivity {
             }
         }
         return false;
+    }
+
+    // Translate the words in degrees
+    protected int calculateProvidedOrientation(String message) {
+        if (message.startsWith("north") || message.startsWith("norte")) {
+            return 0;
+        } else if (message.startsWith("east") || message.startsWith("este")) {
+            return 90;
+        } else if (message.startsWith("south") || message.startsWith("sur")) {
+            return 180;
+        } else if (message.startsWith("west") || message.startsWith("oeste")) {
+            return 270;
+        }
+        else {
+            return 0;
+        }
+    }
+
+    // Translate the words in number
+    protected int calculateErrorMargin(String message){
+        return Integer.parseInt(message.replaceAll("[^0-9]",""));
     }
 }

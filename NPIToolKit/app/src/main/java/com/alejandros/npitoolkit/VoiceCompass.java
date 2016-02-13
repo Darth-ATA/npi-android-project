@@ -44,12 +44,11 @@ public class VoiceCompass extends AppCompatActivity {
             Intent recognizer = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
             recognizer.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
             // Needed for obtain the string
-            recognizer.putExtra(RecognizerIntent.EXTRA_PROMPT,
-                    "Say a cardinal direction and an error margin\nDiga un punto cardinal y un margen de error");
+            recognizer.putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.compass_initMessage));
             startActivityForResult(recognizer, VOICE_RECOGNITION);
         }
         else{
-            Toast.makeText(getApplicationContext(), "Please Connect to Internet", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.compass_internetError), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -62,7 +61,7 @@ public class VoiceCompass extends AppCompatActivity {
                     RecognizerIntent.EXTRA_RESULTS);
             String message = recognitionResult.get(0).toString().toLowerCase();
 
-            Toast.makeText(this, "Recognized text: " + message, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.text_recognized) + message, Toast.LENGTH_LONG).show();
 
             int orientation = calculateProvidedOrientation(message);
             int error = calculateErrorMargin(message);
@@ -75,7 +74,7 @@ public class VoiceCompass extends AppCompatActivity {
                 intent.putExtra(EXTRA_MESSAGE, orientation_error);
                 startActivity(intent);
             }else {
-                Toast.makeText(this, "Have to say something like: " + "north 10 or norte 10", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, R.string.compass_suggestion, Toast.LENGTH_LONG).show();
             }
         }
     }

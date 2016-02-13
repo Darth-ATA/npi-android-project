@@ -44,12 +44,10 @@ public class CameraActivity extends AppCompatActivity {
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
-                mCamera.takePicture(null, null, mPicture);
+                    mCamera.takePicture(null, null, mPicture);
                 String path = Environment.getExternalStoragePublicDirectory(
-                        Environment.DIRECTORY_PICTURES) + "MyCameraApp";
-                Toast.makeText(CameraActivity.this, "Imagen guardada en: " + path, Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(CameraActivity.this, GesturePhoto.class);
-                startActivity(intent);
+                        Environment.DIRECTORY_PICTURES) + "/" + getString(R.string.app_name);;
+                Toast.makeText(CameraActivity.this, getString(R.string.camera_savedTo) + path, Toast.LENGTH_LONG).show();
             }
         }, 3000);
 
@@ -60,7 +58,7 @@ public class CameraActivity extends AppCompatActivity {
 
                 File pictureFile = getOutputMediaFile(MEDIA_TYPE_IMAGE);
                 if (pictureFile == null){
-                    Log.d(TAG, "Error creating media file, check storage permissions: ");
+                    Log.d(TAG, getString(R.string.camera_permissionError));
                     return;
                 }
 
@@ -69,13 +67,20 @@ public class CameraActivity extends AppCompatActivity {
                     fos.write(data);
                     fos.close();
                 } catch (FileNotFoundException e) {
-                    Log.d(TAG, "File not found: " + e.getMessage());
+                    Log.d(TAG, getString(R.string.camera_fileError) + e.getMessage());
                 } catch (IOException e) {
-                    Log.d(TAG, "Error accessing file: " + e.getMessage());
+                    Log.d(TAG, getString(R.string.camera_accesingError) + e.getMessage());
                 }
 
+                Intent intent = new Intent(CameraActivity.this, GesturePhoto.class);
+                startActivity(intent);
             }
         };
+    }
+
+    // Back button disabled
+    @Override
+    public void onBackPressed() {
     }
 
     @Override
@@ -146,7 +151,7 @@ public class CameraActivity extends AppCompatActivity {
         File mediaFile;
         if (type == MEDIA_TYPE_IMAGE){
             mediaFile = new File(mediaStorageDir.getPath() + File.separator +
-                    "IMG_"+ timeStamp + ".jpg");
+                    "IMG_" + timeStamp + ".jpg");
         } else if(type == MEDIA_TYPE_VIDEO) {
             mediaFile = new File(mediaStorageDir.getPath() + File.separator +
                     "VID_"+ timeStamp + ".mp4");

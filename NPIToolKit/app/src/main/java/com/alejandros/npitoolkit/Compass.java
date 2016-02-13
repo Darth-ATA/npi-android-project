@@ -136,7 +136,7 @@ public class Compass extends AppCompatActivity implements SensorEventListener {
             // set the animation after the end of the reservation status
             animation.setFillAfter(true);
 
-            tvHeading.setText("Heading: " + Float.toString((deviceOrientation-providedOrientation+360)%360) + "degrees. " + Boolean.toString(rightHeading));
+            tvHeading.setText(getString(R.string.compass_heading) + Float.toString((deviceOrientation-providedOrientation+360)%360) + getString(R.string.compass_degrees));
 
             // Start the animation
             image.startAnimation(animation);
@@ -146,10 +146,6 @@ public class Compass extends AppCompatActivity implements SensorEventListener {
     }
 
     public boolean isInTheRightDirection(float deviceOrientation){
-        Log.d("ORI", Float.toString(deviceOrientation));
-        Log.d("PRO-", Float.toString((providedOrientation-errorMargin+360)%360));
-        Log.d("PRO+", Float.toString((providedOrientation+errorMargin+360)%360));
-
         // When you have to point the north has to change the conditions
         if(providedOrientation == 0){
             if((deviceOrientation >= (360 - errorMargin)) ||

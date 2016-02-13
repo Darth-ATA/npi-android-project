@@ -82,7 +82,7 @@ public class MovementSound extends AppCompatActivity {
     // en el eje X supera un mínimo.
     public void lightSaberOn(){
         long difference = System.currentTimeMillis() - prevTime;
-        Log.d("Diferences", System.currentTimeMillis() + " " + prevTime);
+
         if(difference > 1000) {
             prevTime = System.currentTimeMillis();
             if (!isLightSaberOn) {

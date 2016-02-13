@@ -45,12 +45,12 @@ public class QRGPSPoint extends AppCompatActivity implements View.OnClickListene
             String scanContent = scanningResult.getContents();
             String scanFormat = scanningResult.getFormatName();
 
-            formatTxt.setText("FORMAT: " + scanFormat);
-            contentTxt.setText("CONTENT: " + scanContent);
+            formatTxt.setText(getString(R.string.QR_format) + scanFormat);
+            contentTxt.setText(getString(R.string.QR_content) + scanContent);
         }
         else{
             Toast toast = Toast.makeText(getApplicationContext(),
-                    "No scan data received!", Toast.LENGTH_SHORT);
+                    R.string.QR_errorScan, Toast.LENGTH_SHORT);
             toast.show();
         }
     }

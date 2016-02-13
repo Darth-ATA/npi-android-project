@@ -59,7 +59,7 @@ public class GesturePhoto extends AppCompatActivity{
             case REQ_CREATE_PATTERN: {
                 if (resultCode == RESULT_OK) {
                     char[] pattern = data.getCharArrayExtra(LockPatternActivity.EXTRA_PATTERN);
-                    Toast.makeText(this, "Pattern:\n" + pattern, Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, getString(R.string.photo_pattern) + pattern, Toast.LENGTH_LONG).show();
                 }
                 break;
             }// REQ_CREATE_PATTERN
@@ -68,21 +68,21 @@ public class GesturePhoto extends AppCompatActivity{
                 switch(resultCode){
                     case RESULT_OK:
                         // The user passed
-                        Toast.makeText(this, "RESULT_OK", Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, R.string.photo_RES_OK, Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(this, CameraActivity.class);
                         startActivity(intent);
                         break;
                     case RESULT_CANCELED:
                         // The user cancelled the task
-                        Toast.makeText(this, "RESULT_CANCELED", Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, R.string.photo_RES_CANCEL, Toast.LENGTH_LONG).show();
                         break;
                     case LockPatternActivity.RESULT_FAILED:
                         // The user failed to enter the pattern
-                        Toast.makeText(this, "RESULT_FAILED", Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, R.string.photo_RES_FAILED, Toast.LENGTH_LONG).show();
                         break;
                     case LockPatternActivity.RESULT_FORGOT_PATTERN:
                         // The user forgot the pattern and invoked your recovery Activity
-                        Toast.makeText(this, "RESULT_FORGOT_PATTERN", Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, R.string.photo_RES_FORGOT, Toast.LENGTH_LONG).show();
                         break;
                 }
 

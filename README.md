@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # npi-android-project
 A little repository for the **"Nuevos Paradigmas de Información"** apps development.
 
@@ -127,3 +128,108 @@ http://stackoverflow.com/questions/9156928/can-error-in-opening-a-camera-be-fixe
 http://stackoverflow.com/questions/1520887/how-to-pause-sleep-thread-or-process-in-android
 http://stackoverflow.com/questions/2543059/android-camera-in-portrait-on-surfaceview
 http://stackoverflow.com/questions/20064793/how-to-fix-camera-orientation
+=======
+# npi-android-project
+A little repository for the "Nuevos Paradigmas de Información" apps development.
+
+We are using Android Studio as IDE.
+
+## VoiceCompass
+
+## QrGPSPoint
+For this developemt we decided to use a bridge withing the app and another app that scan the QR code. Using the classes **IntentIntegrator.java** and **IntentResult.java** provided by the library used **ZXing** permits the user scan the desired QR with an external application that he has installed before or the app will claim him to install it.
+
+## GesturePhoto
+For this development we decided to use as gesture all the combinations that provides de lockpatern of *Android*. For the lockpattern we use the library of [haibison](https://bitbucket.org/haibison/android-lockpattern/wiki/Quick-Use). After entering the correct lockpattern the app automatically opens a camera preview implemented using the [android development camera tutorial](http://stackoverflow.com/questions/2543059/android-camera-in-portrait-on-surfaceview) unfortunately the tutorial uses a deprecated class.
+
+After three seconds of entering the right pattern, it takes a photo and storage it in the external storage of the phone and the app shows a message indicating where the photo has been placed.
+
+## MovementSound
+This app tries to imitate the sounds made by a lightsaber in the Star Wars movies. If you move the phone quickly in the X axis; i.e., in the horizontal direction, the phone will [sound](https://www.freesound.org/people/gyzhor/sounds/47125/) just like when a lightsaber swings in the movies.
+
+The sound implementation is inspired by this [StackOverflow answer](http://stackoverflow.com/a/18459352/3248221). The accelerometer management implementation is based on [this code](http://bit.ly/1oBpGDI).
+
+## Surprise app
+This app uses a new kind of sensor: the proximity sensor. It completes the MovementSound app adding a way of turning on and off your lightsaber: you just have to get the phone in or off your pocket and the phone will [sound](https://www.freesound.org/people/joe93barlow/sounds/78674/) just like a when a lightsaber is turned on or off in the movies.
+
+The implementation is all based on the MovementSound app, we just had to change the sensor used.
+
+## References
+### Get Started
+[Tutorial](http://developer.android.com/training/index.html)
+### Common resources
+[Toolbar](http://developer.android.com/intl/es/reference/android/widget/Toolbar.html)
+[Toast](http://developer.android.com/intl/es/guide/topics/ui/notifiers/toasts.html)
+[Intent](http://developer.android.com/intl/es/reference/android/content/Intent.html)
+[Log](http://developer.android.com/intl/es/reference/android/util/Log.html)
+[Context](http://developer.android.com/intl/es/reference/android/content/Context.html)
+[Motion sensors](https://developer.android.com/intl/es/guide/topics/sensors/sensors_motion.html)
+[Position sensors](https://developer.android.com/intl/es/guide/topics/sensors/sensors_position.html)
+
+https://docs.oracle.com/javase/1.5.0/docs/guide/language/foreach.html
+### VoiceCompass
+[SensorManager](http://developer.android.com/intl/es/reference/android/hardware/SensorManager.html)
+[RecognizerIntent](http://developer.android.com/intl/es/reference/android/speech/RecognizerIntent.html)
+[SpeechRecognizer](http://developer.android.com/intl/es/reference/android/speech/SpeechRecognizer.html)
+
+http://stackoverflow.com/questions/20497087/manifest-xml-when-using-sensors
+http://www.codingforandroid.com/2011/01/using-orientation-sensors-simple.html
+http://www.jameselsey.co.uk/blogs/techblog/android-how-to-implement-voice-recognition-a-nice-easy-tutorial/
+http://www.javacodegeeks.com/2012/08/android-voice-recognition-tutorial.html
+https://www.learn2crack.com/2013/12/android-speech-recognition-example.html
+http://stackoverflow.com/questions/1102891/how-to-check-if-a-string-is-numeric-in-java
+http://stackoverflow.com/questions/10734989/extract-numbers-from-an-alpha-numeric-string-using-android
+### Qr
+
+- http://examples.javacodegeeks.com/android/android-barcode-and-qr-scanner-example/
+- http://code.tutsplus.com/tutorials/android-sdk-create-a-barcode-reader--mobile-17162
+
+### Movement sound
+- [Sound 1](https://www.freesound.org/people/joe93barlow/sounds/78674/)
+- [Accelerometer code](http://bit.ly/1oBpGDI)
+
+#### GitHub
+
+- https://github.com/zxing/zxing/wiki/Scanning-Via-Intent
+- https://github.com/zxing/zxing
+- https://github.com/journeyapps/zxing-android-embedded#custom-layout
+
+#### SourceForge
+- http://sourceforge.net/p/zbar/news/2012/03/zbar-android-sdk-version-01-released/
+- http://sourceforge.net/projects/zbar/?source=typ_redirect
+
+#### StackOverflow
+- http://stackoverflow.com/questions/16080181/qr-code-reading-with-camera-android
+- http://stackoverflow.com/questions/29159104/how-to-integrate-zxing-barcode-scanner-without-installing-the-actual-zxing-app
+- http://stackoverflow.com/questions/27851512/how-to-integrate-zxing-library-to-android-studio-for-barcode-scanning
+- http://stackoverflow.com/questions/27571530/zxing-scanner-android-studio/27573877#27573877
+- http://stackoverflow.com/questions/16433860/how-to-use-zxing-library-wihtout-installing-barcodescanner-app
+- http://stackoverflow.com/questions/10407159/how-to-manage-startactivityforresult-on-android/10407371#10407371
+- http://stackoverflow.com/a/18459352/3248221
+
+### GesturePhoto
+
+[Handler](http://developer.android.com/intl/es/reference/android/os/Handler.html)
+[Camera](http://developer.android.com/intl/es/guide/topics/media/camera.html#manifest)
+[FrameLayout](http://developer.android.com/intl/es/reference/android/widget/FrameLayout.html)
+[File](http://developer.android.com/intl/es/reference/java/io/File.html)
+[FileOutputStream](http://developer.android.com/intl/es/reference/java/io/FileOutputStream.html)
+[Uri](http://developer.android.com/intl/es/reference/android/net/Uri.html)
+[SurfaceView](http://developer.android.com/intl/es/reference/android/view/SurfaceView.html)
+[SurfaceHolder](http://developer.android.com/intl/es/reference/android/view/SurfaceHolder.html)
+
+https://bitbucket.org/haibison/android-lockpattern/wiki/Quick-Use
+http://stackoverflow.com/questions/3687315/deleting-shared-preferences
+http://stackoverflow.com/questions/8034127/how-to-remove-some-key-value-pair-from-sharedpreferences
+http://developer.android.com/intl/es/training/gestures/index.html
+http://developer.android.com/intl/es/training/gestures/detector.html
+
+http://developer.android.com/intl/es/guide/topics/media/camera.html#custom-camera
+http://stackoverflow.com/questions/9156928/can-error-in-opening-a-camera-be-fixed-in-android
+http://stackoverflow.com/questions/1520887/how-to-pause-sleep-thread-or-process-in-android
+http://stackoverflow.com/questions/2543059/android-camera-in-portrait-on-surfaceview
+http://stackoverflow.com/questions/20064793/how-to-fix-camera-orientation
+
+## Surprise app
+- [Sound 1](https://www.freesound.org/people/gyzhor/sounds/47125/)
+>>>>>>> eab3d3c51194e4ceb2785795fed951bce5fc96ca

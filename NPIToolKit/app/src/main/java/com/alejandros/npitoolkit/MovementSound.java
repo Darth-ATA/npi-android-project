@@ -104,8 +104,17 @@ public class MovementSound extends AppCompatActivity {
         if(isLightSaberOn) {
             if (difference > 500) {
                 prevTimeSwing = System.currentTimeMillis();
+                if(sound_lightSaberSwing.isPlaying()){
+                    // Pause the sound and move the pointer to 100ms
+                    sound_lightSaberSwing.pause();
+                    sound_lightSaberSwing.seekTo(100);
+                }
                 sound_lightSaberSwing.start();
             }
+        }
+        else{
+            // Move the pointer to 100ms
+            sound_lightSaberSwing.seekTo(100);
         }
     }
 

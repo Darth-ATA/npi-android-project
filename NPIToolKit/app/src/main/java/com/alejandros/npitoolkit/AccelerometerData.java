@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package com.alejandros.npitoolkit;
 
 import android.hardware.Sensor;
@@ -5,89 +6,154 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
-/*
- * Clase que maneja el acelerómetro.
- */
+// Inspired by http://bit.ly/1oBpGDI
+
 public class AccelerometerData implements SensorEventListener {
     private final SensorManager sensorManager;
-    private final Sensor acelerometro;
+    private final Sensor accelerometer;
     private final MovementSound mainActivity;
 
-    // TODO usar esto bien
-    private float[] datosAcelerometro;
-    private float[] gravedad;
-    private float[] aceleracionLineal;
-    private final float filtroAlpha = 0.8f;
-    // TODO fijar el siguiente valor bien
-    private final float aceleracionMinima = 3;
+    // Variables to store accelerometer data
+    private float[] accelerometerData;
+    private float[] gravity;
+    private float[] linealAcc;
 
-    /*
-     * Inicializamos los valores que se le pasan en la actividad MainActivity:
-     *  - sensorManager no se iniciliza aquí porque tiene que llamar a getSystemService(),
-     *    que esta disponible solo en el contexto (esto es, en la actividad MainActivity)
-     *  - mainActivity es necesario para llamar a funciones que están definidas allí
-     */
+    // Alpha filter to analyze sensor signal
+    private final float alphaFilter = 0.8f;
+
+    // Threshold to play the sound
+    private final float minAcc = 5;
+
+    // Sensor initialization. To be called from MovementSound
     public AccelerometerData(SensorManager sensorManager, MovementSound mainActivity) {
         this.sensorManager = sensorManager;
-        acelerometro = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         this.mainActivity = mainActivity;
 
-        datosAcelerometro = null;
-        gravedad = new float[3];
-        aceleracionLineal = new float[3];
+        accelerometerData = null;
+        gravity = new float[3];
+        linealAcc = new float[3];
     }
 
     protected void onResume() {
-        // Registramos un listerner para recibir datos del acelerómetro del dispositivo
-        sensorManager.registerListener(this, acelerometro, SensorManager.SENSOR_DELAY_NORMAL);
+        // Listener to receive the data from the device sensor
+        sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     protected void onPause() {
-        // Una buena práctica es parar los sensores cuando la aplicación no está en primer plano
+        // If the app is not active, stop listening to the sensors
         sensorManager.unregisterListener(this);
     }
 
-    // Esta función se ejecuta cada vez que el sensor cambia
-    public void onSensorChanged(SensorEvent evento) {
-        // Solo nos interesa cuando el evento esta asociado al acelerómetro
-        if (evento.sensor.getType() == Sensor.TYPE_ACCELEROMETER){
-            datosAcelerometro = evento.values;
+    // Function called every moment the sensor changes
+    public void onSensorChanged(SensorEvent event) {
+        // Sensor filter: we only want the accelerometer sensor data
+        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER){
+            accelerometerData = event.values;
         }
 
-        if ((datosAcelerometro != null)) {
-            /*
-             * Isolamos la fuerza de la gravedad con el filtro paso-bajo (alpha).
-             * Alpha se ha calculado como t/(t+dT), donde t es el filtro paso-bajo
-             * constante en el tiempo y dT es la tasa de envíos de eventos.
-             */
-            gravedad[0] = filtroAlpha * gravedad[0] + (1 - filtroAlpha) * evento.values[0];
-            gravedad[1] = filtroAlpha * gravedad[1] + (1 - filtroAlpha) * evento.values[1];
-            gravedad[2] = filtroAlpha * gravedad[2] + (1 - filtroAlpha) * evento.values[2];
+        // Only if the data comes from the accelerometer sensor:
+        if ((accelerometerData != null)) {
+            // Isolate the gravity force by using the alpha low-pass filter.
+            gravity[0] = alphaFilter * gravity[0] + (1 - alphaFilter) * event.values[0];
+            gravity[1] = alphaFilter * gravity[1] + (1 - alphaFilter) * event.values[1];
+            gravity[2] = alphaFilter * gravity[2] + (1 - alphaFilter) * event.values[2];
 
-            // Removemos la contribución de la gravedad con el filtro paso-alto
-            aceleracionLineal[0] = evento.values[0] - gravedad[0];
-            aceleracionLineal[1] = evento.values[1] - gravedad[1];
-            aceleracionLineal[2] = evento.values[2] - gravedad[2];
+            // Remove the gravity contribution to the data with a high-pass filter
+            linealAcc[0] = event.values[0] - gravity[0];
+            linealAcc[1] = event.values[1] - gravity[1];
+            linealAcc[2] = event.values[2] - gravity[2];
 
-            /*
-             * Si agitamos el dispositivo en la dirección de la X,
-             * gravedad[0] contendrá un valor positivo no trivial
-             * y utilizamos este valor para detectar el gesto que
-             * activará el sonido
-             */
-            // TODO PERFILAR CONDICION
-            mainActivity.fijarTextoAceleracion(aceleracionLineal);
-            if (Math.abs(aceleracionLineal[1]) > aceleracionMinima*2){
+            // Update the GUI text with the filtered accelerometer data
+            mainActivity.changeAccText(linealAcc);
+
+            // If the force in the Y axe is greater than a threshold, turn the lightsaber on
+            if (Math.abs(linealAcc[1]) > minAcc){
                 mainActivity.lightSaberOn();
             }
-            if(Math.abs(aceleracionLineal[0]) > aceleracionMinima*0.1 ||
-               Math.abs(aceleracionLineal[2]) > aceleracionMinima*0.1){
+
+            // If the force in the X or Z axes is grater than a threshold, play the Swing sound
+            // (the lightSaberSwing() function will check whether the lightsaber is on)
+            if(Math.abs(linealAcc[0]) > minAcc*0.5 ||
+               Math.abs(linealAcc[2]) > minAcc*0.5 ){
                 mainActivity.lightSaberSwing();
             }
         }
     }
 
-    // Esta función necesita estar definida aunque no es necesario implementarla en nuestro caso
+    // Need to be defined, but not necessary to implement
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
     }
+=======
+package com.alejandros.npitoolkit;
+
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+
+// Inspired by http://bit.ly/1oBpGDI
+
+public class AccelerometerData implements SensorEventListener {
+    private final SensorManager sensorManager;
+    private final Sensor accelerometer;
+    private final MovementSound mainActivity;
+
+    // Variables to store accelerometer data
+    private float[] accelerometerData;
+    private float[] gravity;
+    private float[] linealAcc;
+
+    // Alpha filter to analyze sensor signal
+    private final float alphaFilter = 0.8f;
+
+    // Sensor initialization. To be called from MovementSound
+    public AccelerometerData(SensorManager sensorManager, MovementSound mainActivity) {
+        this.sensorManager = sensorManager;
+        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        this.mainActivity = mainActivity;
+
+        accelerometerData = null;
+        gravity = new float[3];
+        linealAcc = new float[3];
+    }
+
+    protected void onResume() {
+        // Listener to receive the data from the device sensor
+        sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    protected void onPause() {
+        // If the app is not active, stop listening to the sensors
+        sensorManager.unregisterListener(this);
+    }
+
+    // Function called every moment the sensor changes
+    public void onSensorChanged(SensorEvent event) {
+        // Sensor filter: we only want the accelerometer sensor data
+        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER){
+            accelerometerData = event.values;
+        }
+
+        // Only if the data comes from the accelerometer sensor:
+        if ((accelerometerData != null)) {
+            // Isolate the gravity force by using the alpha low-pass filter.
+            gravity[0] = alphaFilter * gravity[0] + (1 - alphaFilter) * event.values[0];
+            gravity[1] = alphaFilter * gravity[1] + (1 - alphaFilter) * event.values[1];
+            gravity[2] = alphaFilter * gravity[2] + (1 - alphaFilter) * event.values[2];
+
+            // Remove the gravity contribution to the data with a high-pass filter
+            linealAcc[0] = event.values[0] - gravity[0];
+            linealAcc[1] = event.values[1] - gravity[1];
+            linealAcc[2] = event.values[2] - gravity[2];
+
+            // Let the mainActivity manage the data
+            mainActivity.manageData(linealAcc);
+        }
+    }
+
+    // Need to be defined, but not necessary to implement
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+    }
+>>>>>>> eab3d3c51194e4ceb2785795fed951bce5fc96ca
 }

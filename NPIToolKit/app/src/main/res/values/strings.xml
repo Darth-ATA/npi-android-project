@@ -14,16 +14,16 @@
     <string name="scan_QR">ScanQR</string>
     <string name="recognition">Recognice Voice</string>
     <string name="compass_data">Heading: 0.0</string>
-    <string name="compass_description">Little image that points the direction</string>
+    <string name="compass_description">Image that points to the right direction</string>
     <string name="movement_sound">May the force be with you.</string>
-    <string name="compass_initMessage">Say a cardinal direction and an error margin\nDiga un punto cardinal y un margen de error</string>
-    <string name="compass_internetError">Please, connect to Internet</string>
+    <string name="compass_initMessage">Say -in spanish- a cardinal direction and an error margin</string>
+    <string name="compass_internetError">Please, connect to the Internet</string>
     <string name="text_recognized">"Recognized text: "</string>
-    <string name="compass_suggestion">Have to say something like: north 10 or norte 10</string>
+    <string name="compass_suggestion">You have to say something like: "norte 10" or "oeste 5"</string>
     <string name="camera_accesingError">"Error accessing file: "</string>
     <string name="camera_fileError">"File not found: "</string>
     <string name="camera_permissionError">"Error creating media file, check storage permissions: "</string>
-    <string name="camera_savedTo">"Imagen guardada en: "</string>
+    <string name="camera_savedTo">"Image saved in: "</string>
     <string name="photo_pattern">Pattern:\n</string>
     <string name="photo_RES_OK">RESULT_OK</string>
     <string name="photo_RES_CANCEL">RESULT_CANCELED</string>
@@ -34,4 +34,5 @@
     <string name="QR_errorScan">No scan data received!</string>
     <string name="compass_heading">"Heading: "</string>
     <string name="compass_degrees">degrees.</string>
+    <string name="sound_acc">Acceleration:\n</string>
 </resources>

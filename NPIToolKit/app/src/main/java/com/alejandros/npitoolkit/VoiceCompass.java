@@ -40,10 +40,12 @@ public class VoiceCompass extends AppCompatActivity {
     }
 
     public void onClick(View view){
+        // We need internet connection for the RecognizerIntent
         if(isConnected()){
+            // Calls the ReconizerIntent activity
             Intent recognizer = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
             recognizer.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-            // Needed for obtain the string
+            // Will provide the result as string 
             recognizer.putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.compass_initMessage));
             startActivityForResult(recognizer, VOICE_RECOGNITION);
         }

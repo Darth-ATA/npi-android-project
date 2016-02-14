@@ -68,14 +68,10 @@ public class MovementSound extends AppCompatActivity {
 
     public void manageData(float[] data){
         changeAccText(data);
-        if (Math.abs(data[1]) > minAcc){
-            lightSaberOn();
-        }
 
         // If the force in the X or Z axes is grater than a threshold, play the Swing sound
         // (the lightSaberSwing() function will check whether the lightsaber is on)
-        if(Math.abs(data[0]) > minAcc*0.5 ||
-                Math.abs(data[2]) > minAcc*0.5 ){
+        if(Math.abs(data[0]) > minAcc ){
             lightSaberSwing();
         }
 
@@ -89,50 +85,21 @@ public class MovementSound extends AppCompatActivity {
                 + Float.toString(acc[2]) + " Z");
     }
 
-    // It plays the On sound only if 1 second has passed since the last play.
-    protected void lightSaberOn(){
-        // Compute the time difference from the previous play
-        long difference = System.currentTimeMillis() - prevTime;
-
-        // If 1 second has passed, play the sound, change the background color and toggle the
-        // boolean isLightSaberOn value.
-        if(difference > 1000) {
-            prevTime = System.currentTimeMillis();
-            if (!isLightSaberOn) {
-                isLightSaberOn = true;
-                canvas.setBackgroundColor(0xFFC32424);
-                sound_lightSaberOn.start();
-            } else {
-                isLightSaberOn = false;
-                canvas.setBackgroundColor(0xFFFFFFFF);
-                sound_lightSaberOn.start();
-            }
-        }
-    }
-
     // It plays the Swing sound only if 0.5 seconds have passed since the last play AND the lightsaber
     // is on.
     protected void lightSaberSwing(){
         // Compute the time difference from the previous play
         long difference = System.currentTimeMillis() - prevTimeSwing;
 
-        // If the lightsaber is on AND 0.5 seconds have passed AND the sound has stopped, play the sound.
-        if(isLightSaberOn) {
-            if (difference > 500) {
-                prevTimeSwing = System.currentTimeMillis();
-                if(sound_lightSaberSwing.isPlaying()){
-                    // Pause the sound and move the pointer to 100ms
-                    sound_lightSaberSwing.pause();
-                    sound_lightSaberSwing.seekTo(100);
-                }
-                sound_lightSaberSwing.start();
+        // If the 0.5 seconds have passed, play the sound.
+        if (difference > 500) {
+            prevTimeSwing = System.currentTimeMillis();
+            if(sound_lightSaberSwing.isPlaying()){
+                // Pause the sound and move the pointer to 100ms
+                sound_lightSaberSwing.pause();
+                sound_lightSaberSwing.seekTo(100);
             }
-        }
-        else{
-            // Move the pointer to 100ms
-            sound_lightSaberSwing.seekTo(100);
+            sound_lightSaberSwing.start();
         }
     }
-
-
 }

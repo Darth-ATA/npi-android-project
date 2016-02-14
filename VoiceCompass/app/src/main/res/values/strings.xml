@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">VoiceCompass</string>
+    <string name="action_settings">Settings</string>
+    <string name="button_voice_compass">Voice Compass</string>
+    <string name="title_activity_voice_compass">VoiceCompass</string>
+    <string name="recognition">Recognice Voice</string>
+    <string name="compass_data">Heading: 0.0</string>
+    <string name="compass_description">Image that points to the right direction</string>
+    <string name="compass_initMessage">Say -in spanish- a cardinal direction and an error margin</string>
+    <string name="compass_internetError">Please, connect to the Internet</string>
+    <string name="text_recognized">"Recognized text: "</string>
+    <string name="compass_suggestion">You have to say something like: "norte 10" or "oeste 5"</string>
+    <string name="compass_heading">"Heading: "</string>
+    <string name="compass_degrees">degrees.</string>
+</resources>

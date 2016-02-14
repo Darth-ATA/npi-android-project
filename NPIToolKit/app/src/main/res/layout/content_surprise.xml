@@ -10,6 +10,13 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.alejandros.npitoolkit.Surprise"
-    tools:showIn="@layout/activity_surprise">
+    tools:showIn="@layout/activity_surprise"
+    android:id="@+id/surpriseCanvas">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Proximity sensor data"
+        android:id="@+id/proximityText" />
 </RelativeLayout>

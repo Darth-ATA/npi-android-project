@@ -12,6 +12,9 @@ public class MovementSound extends AppCompatActivity {
     private TextView acc_text;
     private RelativeLayout canvas;
 
+    // Threshold to play the sound
+    private final float minAcc = 5;
+
     // Player variables
     MediaPlayer sound_lightSaberOn;
     MediaPlayer sound_lightSaberSwing;
@@ -63,6 +66,21 @@ public class MovementSound extends AppCompatActivity {
         acelerometro.onPause();
     }
 
+    public void manageData(float[] data){
+        changeAccText(data);
+        if (Math.abs(data[1]) > minAcc){
+            lightSaberOn();
+        }
+
+        // If the force in the X or Z axes is grater than a threshold, play the Swing sound
+        // (the lightSaberSwing() function will check whether the lightsaber is on)
+        if(Math.abs(data[0]) > minAcc*0.5 ||
+                Math.abs(data[2]) > minAcc*0.5 ){
+            lightSaberSwing();
+        }
+
+    }
+
     // Function to be called from AccelerometerData in order to modify the acc_text TextView.
     // It will print the acceleration in all the three axes.
     protected void changeAccText(float[] acc) {
@@ -72,8 +90,7 @@ public class MovementSound extends AppCompatActivity {
     }
 
     // It plays the On sound only if 1 second has passed since the last play.
-    // This function should be called from AccelerometerSound only when required.
-    public void lightSaberOn(){
+    protected void lightSaberOn(){
         // Compute the time difference from the previous play
         long difference = System.currentTimeMillis() - prevTime;
 
@@ -95,8 +112,7 @@ public class MovementSound extends AppCompatActivity {
 
     // It plays the Swing sound only if 0.5 seconds have passed since the last play AND the lightsaber
     // is on.
-    // This function should be called from AccelerometerSound only when required.
-    public void lightSaberSwing(){
+    protected void lightSaberSwing(){
         // Compute the time difference from the previous play
         long difference = System.currentTimeMillis() - prevTimeSwing;
 

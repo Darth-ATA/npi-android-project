@@ -20,9 +20,6 @@ public class AccelerometerData implements SensorEventListener {
     // Alpha filter to analyze sensor signal
     private final float alphaFilter = 0.8f;
 
-    // Threshold to play the sound
-    private final float minAcc = 5;
-
     // Sensor initialization. To be called from MovementSound
     public AccelerometerData(SensorManager sensorManager, MovementSound mainActivity) {
         this.sensorManager = sensorManager;
@@ -63,20 +60,8 @@ public class AccelerometerData implements SensorEventListener {
             linealAcc[1] = event.values[1] - gravity[1];
             linealAcc[2] = event.values[2] - gravity[2];
 
-            // Update the GUI text with the filtered accelerometer data
-            mainActivity.changeAccText(linealAcc);
-
-            // If the force in the Y axe is greater than a threshold, turn the lightsaber on
-            if (Math.abs(linealAcc[1]) > minAcc){
-                mainActivity.lightSaberOn();
-            }
-
-            // If the force in the X or Z axes is grater than a threshold, play the Swing sound
-            // (the lightSaberSwing() function will check whether the lightsaber is on)
-            if(Math.abs(linealAcc[0]) > minAcc*0.5 ||
-               Math.abs(linealAcc[2]) > minAcc*0.5 ){
-                mainActivity.lightSaberSwing();
-            }
+            // Let the mainActivity manage the data
+            mainActivity.manageData(linealAcc);
         }
     }
 

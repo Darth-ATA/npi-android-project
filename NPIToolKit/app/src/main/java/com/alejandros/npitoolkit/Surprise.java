@@ -1,27 +1,3 @@
-<<<<<<< HEAD
-package com.alejandros.npitoolkit;
-
-import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
-
-public class Surprise extends AppCompatActivity {
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_surprise);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
-
-}
-=======
 package com.alejandros.npitoolkit;
 
 import android.content.Context;
@@ -114,4 +90,3 @@ public class Surprise extends AppCompatActivity {
         }
     }
 }
->>>>>>> eab3d3c51194e4ceb2785795fed951bce5fc96ca

@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/NPIToolKit.iml" filepath="$PROJECT_DIR$/NPIToolKit.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/voicecompass/voicecompass.iml" filepath="$PROJECT_DIR$/voicecompass/voicecompass.iml" />
     </modules>
   </component>
 </project>

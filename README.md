@@ -14,10 +14,14 @@ For this development we decided to use as gesture all the combinations that prov
 After three seconds of entering the right pattern, it takes a photo and storage it in the external storage of the phone and the app shows a message indicating where the photo has been placed.
 
 ## MovementSound
-This app tries to imitate the sounds made by a lightsaber in the Star Wars movies. If you move the phone in the Y axis; i.e., in the vertical direction, the lightsaber will be turned on -or turned off, in the case it was already on-. When you do this, the phone will [sound](https://www.freesound.org/people/joe93barlow/sounds/78674/) just like when a lightsaber is turned on in the movies. Now, the lightsaber is on and the phone screen is red; if you try to move it in any of the remaining directions -X and Z axes-, the phone will [sound](https://www.freesound.org/people/gyzhor/sounds/47125/) just like when a lightsaber swings in the movies. Whenever you want to turn off the lightsaber, repeat the movement in the vertical direction: the screen will return to its normal white colour and the other movements will not have any effect.
+This app tries to imitate the sounds made by a lightsaber in the Star Wars movies. If you move the phone quickly in the X axis; i.e., in the horizontal direction, the phone will [sound](https://www.freesound.org/people/gyzhor/sounds/47125/) just like when a lightsaber swings in the movies.
 
 The sound implementation is inspired by this [StackOverflow answer](http://stackoverflow.com/a/18459352/3248221). The accelerometer management implementation is based on [this code](http://bit.ly/1oBpGDI).
 
+## Surprise app
+This app uses a new kind of sensor: the proximity sensor. It completes the MovementSound app adding a way of turning on and off your lightsaber: you just have to get the phone in or off your pocket and the phone will [sound](https://www.freesound.org/people/joe93barlow/sounds/78674/) just like a when a lightsaber is turned on or off in the movies.
+
+The implementation is all based on the MovementSound app, we just had to change the sensor used.
 
 ## References
 ### Get Started
@@ -28,6 +32,8 @@ The sound implementation is inspired by this [StackOverflow answer](http://stack
 [Intent](http://developer.android.com/intl/es/reference/android/content/Intent.html)
 [Log](http://developer.android.com/intl/es/reference/android/util/Log.html)
 [Context](http://developer.android.com/intl/es/reference/android/content/Context.html)
+[Motion sensors](https://developer.android.com/intl/es/guide/topics/sensors/sensors_motion.html)
+[Position sensors](https://developer.android.com/intl/es/guide/topics/sensors/sensors_position.html)
 
 https://docs.oracle.com/javase/1.5.0/docs/guide/language/foreach.html
 ### VoiceCompass
@@ -49,7 +55,6 @@ http://stackoverflow.com/questions/10734989/extract-numbers-from-an-alpha-numeri
 
 ### Movement sound
 - [Sound 1](https://www.freesound.org/people/joe93barlow/sounds/78674/)
-- [Sound 2](https://www.freesound.org/people/gyzhor/sounds/47125/)
 - [Accelerometer code](http://bit.ly/1oBpGDI)
 
 #### GitHub
@@ -93,3 +98,6 @@ http://stackoverflow.com/questions/9156928/can-error-in-opening-a-camera-be-fixe
 http://stackoverflow.com/questions/1520887/how-to-pause-sleep-thread-or-process-in-android
 http://stackoverflow.com/questions/2543059/android-camera-in-portrait-on-surfaceview
 http://stackoverflow.com/questions/20064793/how-to-fix-camera-orientation
+
+## Surprise app
+- [Sound 1](https://www.freesound.org/people/gyzhor/sounds/47125/)

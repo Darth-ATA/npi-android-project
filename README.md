@@ -1,9 +1,14 @@
 # npi-android-project
-A little repository for the "Nuevos Paradigmas de Información" apps development.
+A little repository for the **"Nuevos Paradigmas de Información"** apps development.
 
 We are using Android Studio as IDE.
 
 ## VoiceCompass
+This app gives you the posibility of tell to the phone a cardinal point with an error margin and an arrow will point this direction, when the arrow points to the provided direction, it will change his colour for inform that the user is taking the right direction.
+
+The app will recognize every phrase that contains as first word a cardinal point *north, east, west or south* and a number, ignoring the others words told. 
+
+The recognition implementation is inspired by [Android Speech Recognition – Example](https://www.learn2crack.com/2013/12/android-speech-recognition-example.html). The compass implementation is based on those solutions [Como crear una brújula en android](http://agamboadev.esy.es/como-crear-un-brujula-en-android/) and [Create your own magnetic compass](http://www.techrepublic.com/article/pro-tip-create-your-own-magnetic-compass-using-androids-internal-sensors/).
 
 ## QrGPSPoint
 For this developemt we decided to use a bridge withing the app and another app that scan the QR code. Using the classes **IntentIntegrator.java** and **IntentResult.java** provided by the library used **ZXing** permits the user scan the desired QR with an external application that he has installed before or the app will claim him to install it.
@@ -21,27 +26,22 @@ The sound implementation is inspired by this [StackOverflow answer](http://stack
 
 ## References
 ### Get Started
-[Tutorial](http://developer.android.com/training/index.html)
+ - [Android introduction tutorial](http://developer.android.com/training/index.html)
 ### Common resources
-[Toolbar](http://developer.android.com/intl/es/reference/android/widget/Toolbar.html)
-[Toast](http://developer.android.com/intl/es/guide/topics/ui/notifiers/toasts.html)
-[Intent](http://developer.android.com/intl/es/reference/android/content/Intent.html)
-[Log](http://developer.android.com/intl/es/reference/android/util/Log.html)
-[Context](http://developer.android.com/intl/es/reference/android/content/Context.html)
-
-https://docs.oracle.com/javase/1.5.0/docs/guide/language/foreach.html
+ - [Toolbar](http://developer.android.com/intl/es/reference/android/widget/Toolbar.html)
+ - [Toast](http://developer.android.com/intl/es/guide/topics/ui/notifiers/toasts.html)
+ - [Intent](http://developer.android.com/intl/es/reference/android/content/Intent.html)
+ - [Log](http://developer.android.com/intl/es/reference/android/util/Log.html)
+ - [Context](http://developer.android.com/intl/es/reference/android/content/Context.html)
+ - [For each]( https://docs.oracle.com/javase/1.5.0/docs/guide/language/foreach.html)
 ### VoiceCompass
-[SensorManager](http://developer.android.com/intl/es/reference/android/hardware/SensorManager.html)
-[RecognizerIntent](http://developer.android.com/intl/es/reference/android/speech/RecognizerIntent.html)
-[SpeechRecognizer](http://developer.android.com/intl/es/reference/android/speech/SpeechRecognizer.html)
-
-http://stackoverflow.com/questions/20497087/manifest-xml-when-using-sensors
-http://www.codingforandroid.com/2011/01/using-orientation-sensors-simple.html
-http://www.jameselsey.co.uk/blogs/techblog/android-how-to-implement-voice-recognition-a-nice-easy-tutorial/
-http://www.javacodegeeks.com/2012/08/android-voice-recognition-tutorial.html
-https://www.learn2crack.com/2013/12/android-speech-recognition-example.html
-http://stackoverflow.com/questions/1102891/how-to-check-if-a-string-is-numeric-in-java
-http://stackoverflow.com/questions/10734989/extract-numbers-from-an-alpha-numeric-string-using-android
+ - [SensorManager](http://developer.android.com/intl/es/reference/android/hardware/SensorManager.html)
+ - [RecognizerIntent](http://developer.android.com/intl/es/reference/android/speech/RecognizerIntent.html)
+ - [SpeechRecognizer](http://developer.android.com/intl/es/reference/android/speech/SpeechRecognizer.html)
+ - [Voice easy tutorial]( http://www.jameselsey.co.uk/blogs/techblog/android-how-to-implement-voice-recognition-a-nice-easy-tutorial/)
+ - [Voice recognition tutorial]( http://www.javacodegeeks.com/2012/08/android-voice-recognition-tutorial.html)
+ - [Hoy to check if a string is numeric]( http://stackoverflow.com/questions/1102891/how-to-check-if-a-string-is-numeric-in-java)
+ - [Extract numbers from a string]( http://stackoverflow.com/questions/10734989/extract-numbers-from-an-alpha-numeric-string-using-android)
 ### Qr
 
 - http://examples.javacodegeeks.com/android/android-barcode-and-qr-scanner-example/

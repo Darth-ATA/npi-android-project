@@ -4,11 +4,45 @@ A little repository for the **"Nuevos Paradigmas de Información"** apps develop
 We are using Android Studio as IDE.
 
 ## VoiceCompass
+### App Desription
 This app gives you the posibility of tell to the phone a cardinal point with an error margin and an arrow will point this direction, when the arrow points to the provided direction, it will change his colour for inform that the user is taking the right direction.
 
-The app will recognize every phrase that contains as first word a cardinal point *north, east, west or south* and a number, ignoring the others words told. 
+The app will recognize every phrase that contains as first word a cardinal point *north, east, west or south* and a number, ignoring the others words told.
 
 The recognition implementation is inspired by [Android Speech Recognition – Example](https://www.learn2crack.com/2013/12/android-speech-recognition-example.html). The compass implementation is based on those solutions [Como crear una brújula en android](http://agamboadev.esy.es/como-crear-un-brujula-en-android/) and [Create your own magnetic compass](http://www.techrepublic.com/article/pro-tip-create-your-own-magnetic-compass-using-androids-internal-sensors/).
+
+### App implementation
+#### [VoiceCompass](https://github.com/Darth-ATA/npi-android-project/blob/master/NPIToolKit/app/src/main/java/com/alejandros/npitoolkit/VoiceCompass.java)
+For starts the voice recognition, the user have to touch the button in the screen. In low level this is traduced in:
+
+```xml
+    <Button
+         android:id="@+id/VoiceDetectorButton"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:text="@string/recognition"
+         android:onClick="onClick"
+         ></Button>
+```
+
+Then the onClick method will call the Recognizer of android that needs internet connection and inform it that we need the result of the recognition as text, In low level this is traduced in:
+
+```java
+  public void onClick(View view){
+      // We need internet connection for the RecognizerIntent
+      if(isConnected()){
+          // Calls the ReconizerIntent activity
+          Intent recognizer = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+          recognizer.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+          // Will provide the result as string
+          recognizer.putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.compass_initMessage));
+          startActivityForResult(recognizer, VOICE_RECOGNITION);
+      }
+      else{
+          Toast.makeText(getApplicationContext(), getString(R.string.compass_internetError), Toast.LENGTH_LONG).show();
+      }
+  }
+```
 
 ## QrGPSPoint
 For this developemt we decided to use a bridge withing the app and another app that scan the QR code. Using the classes **IntentIntegrator.java** and **IntentResult.java** provided by the library used **ZXing** permits the user scan the desired QR with an external application that he has installed before or the app will claim him to install it.

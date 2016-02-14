@@ -26,10 +26,7 @@ public class Surprise extends AppCompatActivity {
 
     MediaPlayer sound_lightSaberOn;
 
-    private boolean isLightSaberOn;
     private boolean firstTime;
-
-//    private RelativeLayout canvas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +38,6 @@ public class Surprise extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-//        canvas = (RelativeLayout) findViewById(R.id.surpriseCanvas);
         proxText = (TextView) findViewById(R.id.proximityText);
 
         // Instance of the AccelerometerData class to control the data from the sensors
@@ -51,7 +47,6 @@ public class Surprise extends AppCompatActivity {
 
         sound_lightSaberOn = MediaPlayer.create(this, R.raw.light_saber_on);
 
-        isLightSaberOn = false;
         firstTime = true;
     }
 
@@ -78,11 +73,9 @@ public class Surprise extends AppCompatActivity {
     public void manageData(float data) {
         if (prevData < 5.0 && data > 10.0) {
             prevData = data;
-            isLightSaberOn = true;
             sound_lightSaberOn.start();
         } else if (prevData > 10.0 && data < 5.0){
             prevData = data;
-            isLightSaberOn = false;
 
             if(firstTime) {
                 firstTime = false;

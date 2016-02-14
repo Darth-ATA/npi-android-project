@@ -13,7 +13,7 @@ public class MovementSound extends AppCompatActivity {
     private RelativeLayout canvas;
 
     // Threshold to play the sound
-    private final float minAcc = 5;
+    private final float minAcc = 3;
 
     // Player variables
     MediaPlayer sound_lightSaberOn;

@@ -40,13 +40,16 @@ public class Surprise extends AppCompatActivity {
 
         proxText = (TextView) findViewById(R.id.proximityText);
 
-        // Instance of the AccelerometerData class to control the data from the sensors
+        // Instance of the ProximitySensorData class to control the data from the sensors
         proxSensor = new ProximitySensorData((SensorManager) getSystemService(Context.SENSOR_SERVICE), this);
 
+        // Previuos data initialisation
         prevData = 9999999;
 
+        // Sound initialisation
         sound_lightSaberOn = MediaPlayer.create(this, R.raw.light_saber_on);
 
+        // Variable to distinguish between the first toggle and the other ones.
         firstTime = true;
     }
 
@@ -68,8 +71,7 @@ public class Surprise extends AppCompatActivity {
         proxText.setText("Proximity sensor data: " + Float.toString(data));
     }
 
-    // It plays the On sound only if 1 second has passed since the last play.
-    // This function should be called from ProximitySensorData only when required.
+    // It plays the On sound whenever the sensor changes from near to far or viceversa.
     public void manageData(float data) {
         if (prevData < 5.0 && data > 10.0) {
             prevData = data;
@@ -77,6 +79,8 @@ public class Surprise extends AppCompatActivity {
         } else if (prevData > 10.0 && data < 5.0){
             prevData = data;
 
+            // Changing from far to near => saving phone in pocket => play the sound unless it is
+            // the first time
             if(firstTime) {
                 firstTime = false;
             }

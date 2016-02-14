@@ -6,12 +6,18 @@ We are using Android Studio as IDE.
 ## VoiceCompass
 
 ## QrGPSPoint
-For his developemt it decides to use a bridge withing the app and another app that scan the QR code. Using the classes **IntentIntegrator.java** and **IntentResult.java** provided by the library used **ZXing** permits the user scan the desired QR with an external application that he has installed before or the app will claim him to install it.
+For this developemt we decided to use a bridge withing the app and another app that scan the QR code. Using the classes **IntentIntegrator.java** and **IntentResult.java** provided by the library used **ZXing** permits the user scan the desired QR with an external application that he has installed before or the app will claim him to install it.
 
 ## GesturePhoto
-For his development it decides to use as gesture all the combinations that provides de lockpatern of *Android*. For the lockpattern we use the library of [haibison](https://bitbucket.org/haibison/android-lockpattern/wiki/Quick-Use). After entering the correct lockpattern the app automatically opens a camera preview implemented using the [android development camera tutorial](http://stackoverflow.com/questions/2543059/android-camera-in-portrait-on-surfaceview) unfortunately the tutorial uses a deprecated class.
+For this development we decided to use as gesture all the combinations that provides de lockpatern of *Android*. For the lockpattern we use the library of [haibison](https://bitbucket.org/haibison/android-lockpattern/wiki/Quick-Use). After entering the correct lockpattern the app automatically opens a camera preview implemented using the [android development camera tutorial](http://stackoverflow.com/questions/2543059/android-camera-in-portrait-on-surfaceview) unfortunately the tutorial uses a deprecated class.
 
-After three seconds of entering the right pattern, it takes a photo and storaged in the external storage of the phone and the app shown a little message indicating where the photo has been placed.
+After three seconds of entering the right pattern, it takes a photo and storage it in the external storage of the phone and the app shows a message indicating where the photo has been placed.
+
+## MovementSound
+This app tries to imitate the sounds made by a lightsaber in the Star Wars movies. If you move the phone in the Y axis; i.e., in the vertical direction, the lightsaber will be turned on -or turned off, in the case it was already on-. When you do this, the phone will [sound](https://www.freesound.org/people/joe93barlow/sounds/78674/) just like when a lightsaber is turned on in the movies. Now, the lightsaber is on and the phone screen is red; if you try to move it in any of the remaining directions -X and Z axes-, the phone will [sound](https://www.freesound.org/people/gyzhor/sounds/47125/) just like when a lightsaber swings in the movies. Whenever you want to turn off the lightsaber, repeat the movement in the vertical direction: the screen will return to its normal white colour and the other movements will not have any effect.
+
+The sound implementation is inspired by this [StackOverflow answer](http://stackoverflow.com/a/18459352/3248221). The accelerometer management implementation is based on [this code](http://bit.ly/1oBpGDI).
+
 
 ## References
 ### Get Started
@@ -41,6 +47,11 @@ http://stackoverflow.com/questions/10734989/extract-numbers-from-an-alpha-numeri
 - http://examples.javacodegeeks.com/android/android-barcode-and-qr-scanner-example/
 - http://code.tutsplus.com/tutorials/android-sdk-create-a-barcode-reader--mobile-17162
 
+### Movement sound
+- [Sound 1](https://www.freesound.org/people/joe93barlow/sounds/78674/)
+- [Sound 2](https://www.freesound.org/people/gyzhor/sounds/47125/)
+- [Accelerometer code](http://bit.ly/1oBpGDI)
+
 #### GitHub
 
 - https://github.com/zxing/zxing/wiki/Scanning-Via-Intent
@@ -58,6 +69,7 @@ http://stackoverflow.com/questions/10734989/extract-numbers-from-an-alpha-numeri
 - http://stackoverflow.com/questions/27571530/zxing-scanner-android-studio/27573877#27573877
 - http://stackoverflow.com/questions/16433860/how-to-use-zxing-library-wihtout-installing-barcodescanner-app
 - http://stackoverflow.com/questions/10407159/how-to-manage-startactivityforresult-on-android/10407371#10407371
+- http://stackoverflow.com/a/18459352/3248221
 
 ### GesturePhoto
 

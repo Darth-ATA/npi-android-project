@@ -34,4 +34,5 @@
     <string name="QR_errorScan">No scan data received!</string>
     <string name="compass_heading">"Heading: "</string>
     <string name="compass_degrees">degrees.</string>
+    <string name="sound_acc">Aceleración:\n</string>
 </resources>

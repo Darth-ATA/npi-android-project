@@ -1,11 +1,8 @@
-# npi-android-project
-A little repository for the **"Nuevos Paradigmas de Información"** apps development.
-
-We are using Android Studio as IDE.
+# NPI Android project
 
 ## NPIToolKit
-This app it's only an all in one app of the apps below.
-You can install only this app if youy don't want have 6 icons in your phone.
+This app is only an all in one app of the apps below.
+You can install this app if you don't want to have 6 icons in your phone.
 
 ## VoiceCompass
 ### App Desription

@@ -12,8 +12,11 @@ The app will recognize every phrase that contains as first word a cardinal point
 The recognition implementation is inspired by [Android Speech Recognition – Example](https://www.learn2crack.com/2013/12/android-speech-recognition-example.html). The compass implementation is based on those solutions [Como crear una brújula en android](http://agamboadev.esy.es/como-crear-un-brujula-en-android/) and [Create your own magnetic compass](http://www.techrepublic.com/article/pro-tip-create-your-own-magnetic-compass-using-androids-internal-sensors/).
 
 ### App implementation
-#### [VoiceCompass](https://github.com/Darth-ATA/npi-android-project/blob/master/NPIToolKit/app/src/main/java/com/alejandros/npitoolkit/VoiceCompass.java)
-For starts the voice recognition, the user have to touch the button in the screen. In low level this is traduced in:
+#### VoiceCompass
+ - [VoiceCompass.java](https://github.com/Darth-ATA/npi-android-project/blob/master/NPIToolKit/app/src/main/java/com/alejandros/npitoolkit/VoiceCompass.java)
+ - [content_voice_compass.xml](https://github.com/Darth-ATA/npi-android-project/blob/master/NPIToolKit/app/src/main/res/layout/content_voice_compass.xml)
+
+For starts the voice recognition, the user have to touch the button in the screen. In code this is traduced in:
 
 ```xml
     <Button
@@ -25,7 +28,7 @@ For starts the voice recognition, the user have to touch the button in the scree
          ></Button>
 ```
 
-Then the onClick method will call the Recognizer of android that needs internet connection and inform it that we need the result of the recognition as text, In low level this is traduced in:
+Then the onClick method will call the **RecognizerIntent** of Android (whose needs internet connection) and we indicate that we want the recognition result as text (String). In code this is traduced in:
 
 ```java
   public void onClick(View view){
@@ -43,8 +46,157 @@ Then the onClick method will call the Recognizer of android that needs internet 
       }
   }
 ```
+Then we traduced the message in direction values. In code this is traduced in:
+
+```java
+    // Translate the words in degrees
+    protected int calculateProvidedOrientation(String message) {
+        if (message.startsWith("north") || message.startsWith("norte")) {
+            return 0;
+        } else if (message.startsWith("east") || message.startsWith("este")) {
+            return 90;
+        } else if (message.startsWith("south") || message.startsWith("sur")) {
+            return 180;
+        } else if (message.startsWith("west") || message.startsWith("oeste")) {
+            return 270;
+        }
+        else {
+            return 0;
+        }
+    }
+
+    // Ignore the words that isn't numbers and convert those string to int
+    protected int calculateErrorMargin(String message){
+        return  0 + Integer.parseInt(message.replaceAll("[^0-9]",""));
+    }
+```
+
+Now we have all the necesary data for create our compass. Then we call the activity that are going to simulate the compass, but we have to provide to this activity the calculated data first. In code this is traduced:
+
+```java
+    // First checks that the message have a cardinal point as first word and then starts the compass activity
+    if(checkMessage(message)){
+        Intent intent = new Intent(this, Compass.class);
+        intent.putExtra(EXTRA_MESSAGE, orientation_error);
+        startActivity(intent);
+    }else {
+        Toast.makeText(this, R.string.compass_suggestion, Toast.LENGTH_LONG).show();
+    }
+```
+
+#### Compass
+ - [Compass.java](https://github.com/Darth-ATA/npi-android-project/blob/master/NPIToolKit/app/src/main/java/com/alejandros/npitoolkit/Compass.java)
+ - [activity_compass.xml](https://github.com/Darth-ATA/npi-android-project/blob/master/NPIToolKit/app/src/main/res/layout/activity_compass.xml)
+
+ We have the cardinal point and the error as two int variables and we have to show the user where are the point that he want. We can achieve this using an image that indicates the direction that user have to take. In code this is traduced:
+
+ ```xml
+ <ImageView
+    android:id="@+id/imageViewCompass"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/tvHeading"
+    android:layout_centerHorizontal="true"
+    android:src="@drawable/arrow"
+    android:contentDescription="@string/compass_description"
+    />
+ ```
+
+The direction is calculated using the accelerometer and the magnetometer in the phone. For this when the sensors data change we calculate the direction that have the coordinate that we choose and shown an animation based on turn an arrow image. Also we have to inform the user when he is taking the good direction. For this we choose the option of change the arrow color. In code this is traduced:
+
+```java
+// It executes when the sensor change
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        // Can change the accelerometer or the magnetometer
+        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER)
+            mGravity = event.values.clone();
+        if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD)
+            mGeomagnetic = event.values.clone();
+
+        // Need the data of both sensors for the compass
+        if ((mGravity != null) && (mGeomagnetic != null)) {
+            /*
+             * For the orientation of the device, it calculates the azimut:
+             * "angle of the reference (north) and a line in the middle of the observer
+             * and the interest point in the same direction field" - Wikipedia
+             * If the azimut is 0º, the device is oriented to the North, 90º to the East,
+             * 180º to the South and 270º to the West
+             *
+             * For calculate the azimut, first calculate the rotation matrix (using the
+             * accelerometer and magnetometer data) and after it uses this matrix obtaining
+             * a vector that his first coordinate is de azimut
+             */
+            SensorManager.getRotationMatrix(rotationMatrix, null, mGravity, mGeomagnetic);
+            SensorManager.getOrientation(rotationMatrix, orientation);
+
+            float azimut = orientation[0]; // orientation contains: azimut, pitch and roll
+
+            // Azimut to degrees
+            float deviceOrientation = (float)(Math.toDegrees(azimut)+360)%360;
+
+            boolean rightHeading = isInTheRightDirection(deviceOrientation);
+
+            if(rightHeading) {
+                int green = Color.parseColor("#008000"); //Green colour
+                image.setColorFilter(green);
+            }
+            else{
+                image.clearColorFilter();
+            }
+
+            // animate the image change for an smooth visualization
+            RotateAnimation animation = new RotateAnimation(
+                    previusOrientation,
+                    -(deviceOrientation-providedOrientation),
+                    Animation.RELATIVE_TO_SELF, 0.5f,
+                    Animation.RELATIVE_TO_SELF, 0.5f);
+
+            // how long the animation will take place
+            animation.setDuration(210);
+
+            // set the animation after the end of the reservation status
+            animation.setFillAfter(true);
+
+            tvHeading.setText(getString(R.string.compass_heading) + Float.toString((deviceOrientation-providedOrientation+360)%360) + getString(R.string.compass_degrees));
+
+            // start the animation
+            image.startAnimation(animation);
+
+            // save the orientation for the next animation
+            previusOrientation = -(deviceOrientation-providedOrientation);
+        }
+    }
+```
+
+The method that calculate when it is taking the good direction:
+```java
+    // Checks that the device is taking the direction provided
+    public boolean isInTheRightDirection(float deviceOrientation){
+        // When you have to point the north has to change the conditions
+        if(providedOrientation == 0){
+            if((deviceOrientation >= (360 - errorMargin)) ||
+               (deviceOrientation <= errorMargin)){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        else {
+            if (((deviceOrientation >= (providedOrientation - errorMargin + 360) % 360)) &&
+                 (deviceOrientation <= (providedOrientation + errorMargin + 360) % 360)) {//Math.abs(deviceOrientation - providedOrientation) <= errorMargin){
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+```
 
 ## QrGPSPoint
+### App Description
+This app gives you the posibility to provide an Qr code that contains some info, and the user can read the information inside this Qr code.
 For this developemt we decided to use a bridge withing the app and another app that scan the QR code. Using the classes **IntentIntegrator.java** and **IntentResult.java** provided by the library used **ZXing** permits the user scan the desired QR with an external application that he has installed before or the app will claim him to install it.
 
 ## GesturePhoto

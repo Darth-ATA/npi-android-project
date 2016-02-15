@@ -86,7 +86,7 @@ public class Compass extends AppCompatActivity implements SensorEventListener {
     // It executes when the sensor change
     @Override
     public void onSensorChanged(SensorEvent event) {
-        // Can be change the accelerometer or the magnetometer
+        // Can change the accelerometer or the magnetometer
         if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER)
             mGravity = event.values.clone();
         if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD)
@@ -115,6 +115,7 @@ public class Compass extends AppCompatActivity implements SensorEventListener {
 
             boolean rightHeading = isInTheRightDirection(deviceOrientation);
 
+            // changes the arrow color when the user is taking the good direction
             if(rightHeading) {
                 int green = Color.parseColor("#008000"); //Green colour
                 image.setColorFilter(green);
@@ -123,6 +124,7 @@ public class Compass extends AppCompatActivity implements SensorEventListener {
                 image.clearColorFilter();
             }
 
+            // animate the image change for an smooth visualization
             RotateAnimation animation = new RotateAnimation(
                     previusOrientation,
                     -(deviceOrientation-providedOrientation),
@@ -137,13 +139,15 @@ public class Compass extends AppCompatActivity implements SensorEventListener {
 
             tvHeading.setText(getString(R.string.compass_heading) + Float.toString((deviceOrientation-providedOrientation+360)%360) + getString(R.string.compass_degrees));
 
-            // Start the animation
+            // start the animation
             image.startAnimation(animation);
 
+            // save the orientation for the next animation
             previusOrientation = -(deviceOrientation-providedOrientation);
         }
     }
 
+    // Checks that the device is taking the direction provided
     public boolean isInTheRightDirection(float deviceOrientation){
         // When you have to point the north has to change the conditions
         if(providedOrientation == 0){

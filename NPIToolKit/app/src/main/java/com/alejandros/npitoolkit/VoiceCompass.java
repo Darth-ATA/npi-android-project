@@ -71,6 +71,7 @@ public class VoiceCompass extends AppCompatActivity {
 
             //Toast.makeText(this,"El error reconocido es:" + Integer.toString(error), Toast.LENGTH_LONG).show();
 
+            // First checks that the message have a cardinal point as first word and then starts the compass activity
             if(checkMessage(message)){
                 Intent intent = new Intent(this, Compass.class);
                 intent.putExtra(EXTRA_MESSAGE, orientation_error);
@@ -82,7 +83,7 @@ public class VoiceCompass extends AppCompatActivity {
     }
 
     /**
-     * Check that the message looks like: "<direction> <error>"
+     * Check that the message looks like: "<direction>"
      */
     protected boolean checkMessage(String message){
         List<String> myList = Arrays.asList("north","south","east","west","norte","sur","este","oeste");
@@ -111,8 +112,8 @@ public class VoiceCompass extends AppCompatActivity {
         }
     }
 
-    // Translate the words in number
+    // Ignore the words that isn't numbers and convert those string to int
     protected int calculateErrorMargin(String message){
-        return Integer.parseInt(message.replaceAll("[^0-9]",""));
+        return  0 + Integer.parseInt(message.replaceAll("[^0-9]",""));
     }
 }

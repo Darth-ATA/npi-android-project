@@ -19,6 +19,11 @@ public class ProximitySensorData implements SensorEventListener {
         this.sensorManager = sensorManager;
         proxSensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
         this.mainActivity = mainActivity;
+
+    }
+
+    public float getHighValue(){
+        return proxSensor.getMaximumRange();
     }
 
     protected void onResume() {

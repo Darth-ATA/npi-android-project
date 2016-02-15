@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Surprise.iml" filepath="$PROJECT_DIR$/Surprise.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file:///mnt/Datos/Documentos/Proyectos/npi-android-project/Surprise/Surprise.iml" filepath="/mnt/Datos/Documentos/Proyectos/npi-android-project/Surprise/Surprise.iml" />
+      <module fileurl="file:///mnt/Datos/Documentos/Proyectos/npi-android-project/Surprise/app/app.iml" filepath="/mnt/Datos/Documentos/Proyectos/npi-android-project/Surprise/app/app.iml" />
     </modules>
   </component>
 </project>

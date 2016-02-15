@@ -1,7 +1,6 @@
 package com.alejandros.npitoolkit;
 
 import android.content.Context;
-import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -11,10 +10,6 @@ import android.widget.TextView;
 
 public class Surprise extends AppCompatActivity {
     private ProximitySensorData proxSensor;
-    private AccelerometerData accSensor;
-
-    private SensorManager mSensorManager;
-    private Sensor mProximitySensor;
 
     private TextView proxText;
 

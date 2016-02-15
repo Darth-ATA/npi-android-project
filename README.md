@@ -3,6 +3,10 @@ A little repository for the **"Nuevos Paradigmas de Información"** apps develop
 
 We are using Android Studio as IDE.
 
+## NPIToolKit
+This app it's only an all in one app of the apps below.
+You can install only this app if youy don't want have 6 icons in your phone.
+
 ## VoiceCompass
 ### App Desription
 This app gives you the posibility of tell to the phone a cardinal point with an error margin and an arrow will point this direction, when the arrow points to the provided direction, it will change his colour for inform that the user is taking the right direction.

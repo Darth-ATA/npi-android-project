@@ -10,20 +10,17 @@ import android.widget.TextView;
 public class MovementSound extends AppCompatActivity {
     private AccelerometerData acelerometro;
     private TextView acc_text;
-    private RelativeLayout canvas;
 
     // Threshold to play the sound
     private final float minAcc = 3;
 
-    // Player variables
-    MediaPlayer sound_lightSaberOn;
+    // Player variable
     MediaPlayer sound_lightSaberSwing;
 
     // Boolean to control whether the lightsaber is on
     boolean isLightSaberOn = false;
 
     // Variables to control the time from the previous accepted movement
-    long prevTime;
     long prevTimeSwing;
 
     @Override
@@ -40,18 +37,15 @@ public class MovementSound extends AppCompatActivity {
 
         // GUI objects that will be modified
         acc_text= (TextView) findViewById(R.id.acc_text);
-        canvas = (RelativeLayout) findViewById(R.id.canvas);
 
         // Instance of the AccelerometerData class to control the data from the sensors
         acelerometro = new AccelerometerData((SensorManager) getSystemService(SENSOR_SERVICE), this);
 
-        // Creation of the player for both sounds
-        sound_lightSaberOn = MediaPlayer.create(this, R.raw.light_saber_on);
+        // Creation of the player for the sound
         sound_lightSaberSwing = MediaPlayer.create(this, R.raw.light_saber_swing);
 
         // Initialisation of the time-control variables
-        prevTime = System.currentTimeMillis();
-        prevTimeSwing = prevTime;
+        prevTimeSwing = System.currentTimeMillis();
     }
 
     // Call accelerometer onResume
@@ -77,7 +71,7 @@ public class MovementSound extends AppCompatActivity {
 
     }
 
-    // Function to be called from AccelerometerData in order to modify the acc_text TextView.
+    // Function to be called in order to modify the acc_text TextView.
     // It will print the acceleration in all the three axes.
     protected void changeAccText(float[] acc) {
         acc_text.setText(getString(R.string.sound_acc) + Float.toString(acc[0]) + " X, "

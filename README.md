@@ -430,12 +430,327 @@ After 3 seconds the photo has to be taken and storaged int he external storage o
 This app tries to imitate the sounds made by a lightsaber in the Star Wars movies. If you move the phone quickly in the X axis; i.e., in the horizontal direction, the phone will [sound](https://www.freesound.org/people/gyzhor/sounds/47125/) just like when a lightsaber swings in the movies.
 
 ### App implementation
+This app analyzes the data read by the accelerometer, show them in the GUI and make a sound when a certain movement is made. Before see each part separately.
+
+#### GUI elements
+The GUI of this app is incredibly simple: there is just one `TextView` element, that is initialisied to some random text in case the accelerometer returns no values, and that is declared in the `content_movement_sound.xml` as follows:
+
+```xml
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/movement_sound"
+    android:id="@+id/acc_text"
+    android:layout_alignParentRight="true"
+    android:layout_alignParentEnd="true"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true"
+    android:autoText="false"
+    android:editable="false"
+    android:textSize="@dimen/abc_text_size_body_2_material" />
+```
+
+The only interesting attribute of this `TextView` is its `id`, as we will need it to reference it later. This `TextView` will show the measures read by the accelerometer sensor.
+
 #### Sound management
-The sound management, inspired by this [StackOverflow answer](http://stackoverflow.com/a/18459352/3248221), is based on the
+The sound management, inspired by this [StackOverflow answer](http://stackoverflow.com/a/18459352/3248221), is based on the `MediaPlayer` class, that can be instantiated with an audio file and can manage all the actions we could expect from a class of this kind: play the sound, pause it or move the player to another point of the clip, among others.
+
+First of all, we need to import the library with the following line:
+```java
+import android.media.MediaPlayer;
+```
+
+The class implemented will be named `MovementSound` and, as usual, it will extend `AppCompatActivity`.
+
+As we will see later the accelerometer management, let's focus just on the code lines that refer to the movement. The class managing the sound will look like the following:
+
+
+```java
+public class MovementSound extends AppCompatActivity {
+    // Player variable
+    MediaPlayer sound_lightSaberSwing;
+
+    // Variables to control the time from the previous accepted movement
+    long prevTimeSwing;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        // Initial settings
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_movement_sound);
+
+        // Toolbar setting
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        // Creation of the player for the sound
+        sound_lightSaberSwing = MediaPlayer.create(this, R.raw.light_saber_swing);
+    }
+
+    // Call accelerometer onResume
+    protected void onResume() {
+        super.onResume();
+    }
+
+    // Call accelerometer onPause
+    protected void onPause() {
+        super.onPause();
+    }
+
+    // It plays the Swing sound only if 0.5 seconds have passed since the last play
+    protected void lightSaberSwing(){
+        if(sound_lightSaberSwing.isPlaying()){
+            // Pause the sound and move the pointer to 100ms
+            sound_lightSaberSwing.pause();
+            sound_lightSaberSwing.seekTo(100);
+        }
+        sound_lightSaberSwing.start();
+    }
+}
+```
+
+As you can see, we declare a `MediPlayer` variable as a class attribute with `MediaPlayer sound_lightSaberSwing;`
+
+In the `onCreate()` method, apart from the usual stuff, we assign a player to the previous variable with
+
+```java
+// Creation of the player for the sound
+sound_lightSaberSwing = MediaPlayer.create(this, R.raw.light_saber_swing);
+```
+
+We have to pass the current activity to the constructor and assign a sound to the player; i.e., `R.raw.light_saber_swing`, that is just an audio file. There are a lot of accepted formats, so this is not an issue to worry about.
+
+Apart from the `onResume()` and `onPause()` usual methods, we define a new one:
+
+```java
+// It plays the Swing sound
+protected void lightSaberSwing(){
+    if(sound_lightSaberSwing.isPlaying()){
+        // Pause the sound and move the pointer to 100ms
+        sound_lightSaberSwing.pause();
+        sound_lightSaberSwing.seekTo(100);
+    }
+    sound_lightSaberSwing.start();
+}
+```
+
+This method, when called, check whether the sound is still playing. If it actually is, it pauses the sound and move it to the beginning with `seekTo` (we move it to 100ms just because the sound has some silence in the beginning and we want to skip it). Now, the sound is either paused or finished, so we can  play it again without worries.
+
+The prior condition check is made beacuse the accepted accelerometer movements, that we will see right now, can be really fast, so we have to stop the sound and start it again.
 
 #### Movement recognition
 
-. The accelerometer management implementation is based on [this code](http://bit.ly/1oBpGDI).
+The accelerometer management implementation is based on [this code](http://bit.ly/1oBpGDI). The [Android documentation](https://developer.android.com/intl/es/guide/topics/sensors/sensors_motion.html) was also widely studied.
+
+For the implementation of the accelerometer sensor, a structure in two files was chosen: the actual accelerometer management was made in the `AccelerometerData.java` file, whereas the management of the data received was added to the `MovementSound.java` file.
+
+##### Accelerometer management
+To define a class that reads a sensor it has to implement `SensorEventListener`, so the general structure of the class will be the following:
+
+```java
+public class AccelerometerData implements SensorEventListener {
+    // Sensor initialization. To be called from MovementSound
+    public AccelerometerData(SensorManager sensorManager, MovementSound mainActivity) {
+    }
+
+    protected void onResume() {
+    }
+
+    protected void onPause() {
+    }
+
+    // Function called every moment the sensor changes
+    public void onSensorChanged(SensorEvent event) {
+    }
+
+    // Need to be defined, but not necessary to implement
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+    }
+}
+```
+
+There is a constructor that should be called from the main activity; i.e., the MovementSound class, and, apart from the `onResume()` and `onPause()` methods, two functions that are called whenever the sensor has a new reading or its precision is changed. The last method has to be defined but we do not have the need to implement it, as the accuracy used will always be the same.
+
+Let's add the following class attributes:
+- A `SensorManager` to initialize the actual sensor
+- A `Sensor`, that will be the accelerometer,
+- A `MovementSound`, that will store the activity from where the AccelerometerData class is instantiated.
+- Three arrays of floats: one to store the data, one to store the isolated gravity and another one to store the final lineal and clean accelerometer data.
+- A float that will help us to isolate the gravity readings using a low-pass filter.
+
+```java
+private final SensorManager sensorManager;
+private final Sensor accelerometer;
+private final MovementSound mainActivity;
+
+// Variables to store accelerometer data
+private float[] accelerometerData;
+private float[] gravity;
+private float[] linealAcc;
+
+// Alpha filter to analyze sensor signal
+private final float alphaFilter = 0.8f;
+```
+
+The code of the constructor just have to initialize the sensor to the accelerometer and the arrays to empty arrays.
+
+
+```java
+// Sensor initialization. To be called from MovementSound
+public AccelerometerData(SensorManager sensorManager, MovementSound mainActivity) {
+    this.sensorManager = sensorManager;
+    accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+    this.mainActivity = mainActivity;
+
+    accelerometerData = null;
+    gravity = new float[3];
+    linealAcc = new float[3];
+}
+```
+
+The `sensorManager` will be initialised from the main activity; i.e., the `MovementSound` class, so we just use it to get the sensor associated with the `TYPE_ACCELEROMETER` type.
+
+The other three lines are self-explanatory.
+
+To implement the `onResume()` and `onPause()` methods, we just have to register/unregister the listener; i.e., to restart reading sensor data or to stop doing it. The code is as follows:
+
+```java
+protected void onResume() {
+    // Listener to receive the data from the device sensor
+    sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+}
+
+protected void onPause() {
+    // If the app is not active, stop listening to the sensors
+    sensorManager.unregisterListener(this);
+}
+```
+
+The important method, however, is the `onSensorChanged` function, that will be automatically called from the system whenever the data has new readings to analyze. Its code is the following:
+
+```java
+// Function called every moment the sensor changes
+public void onSensorChanged(SensorEvent event) {
+    // Sensor filter: we only want the accelerometer sensor data
+    if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER){
+        accelerometerData = event.values;
+    }
+
+    // Only if the data comes from the accelerometer sensor:
+    if ((accelerometerData != null)) {
+        // Isolate the gravity force by using the alpha low-pass filter.
+        gravity[0] = alphaFilter * gravity[0] + (1 - alphaFilter) * event.values[0];
+        gravity[1] = alphaFilter * gravity[1] + (1 - alphaFilter) * event.values[1];
+        gravity[2] = alphaFilter * gravity[2] + (1 - alphaFilter) * event.values[2];
+
+        // Remove the gravity contribution to the data with a high-pass filter
+        linealAcc[0] = event.values[0] - gravity[0];
+        linealAcc[1] = event.values[1] - gravity[1];
+        linealAcc[2] = event.values[2] - gravity[2];
+
+        // Let the mainActivity manage the data
+        mainActivity.manageData(linealAcc);
+    }
+}
+```
+
+First of all, we check whether the function has been called by the accelerometer or by any other sensor. In the latter case, we do nothing; in the former, we analyze and clean the data.
+
+First of all, we isolate the gravity using a low-pass filter that will use the previous readings. This is done just to clean the readings from unwanted noise.
+
+Then, we get the clean readings and store them in `linealAcc`. The sensor returns three readings: one for each axis, so we just have to remove the gravity from the raw readings and store the clean data.
+
+When this is done, we pass the accelerometer readings for the `mainActivity` to manage them: obviously, we have to define a `manageData()` method in `MovementSound`, that will expect an array of floats as its single argument.
+
+The previous code implement the accelerometer readings, but what do we do with the data now? The answer is blowing in the code of the `manageData()` method, whose code is the following:
+
+```java
+public void manageData(float[] data){
+    changeAccText(data);
+
+    // If the force in the X axis is grater than a threshold, play the Swing sound
+    if(Math.abs(data[0]) > minAcc ){
+        lightSaberSwing();
+    }
+
+}
+```
+
+As we see, it just updates the GUI text with a `changeAccText` method and, if the reading on the X axis is greater than a threshold (defined as `3` in the final code after experimental tests), the `lightSaberSwing` method previously explained will be executed. This little piece of code is the core of our app.
+
+The method not yet explained is the `changeAccText`, that updates the `TextView` element:
+
+```java
+// Function to be called in order to modify the acc_text TextView.
+// It will print the acceleration in all the three axes.
+protected void changeAccText(float[] acc) {
+    acc_text.setText(getString(R.string.sound_acc) + Float.toString(acc[0]) + " X, "
+            + Float.toString(acc[1]) + " Y, "
+            + Float.toString(acc[2]) + " Z");
+}
+```
+
+The text is updated with a string starting with "Accelerometer: ", stored in  the `strings.xml` file, and followed by all the three readings passed.
+
+Of course, we have to declare and define the `acc_text` as follows:
+```java
+//Declaration
+private TextView acc_text;
+
+//Definition on the onCreate method
+acc_text = (TextView) findViewById(R.id.acc_text);
+```
+
+At last, but not least, we have to call the accelerometer constructor from within the `MovementSound` and take care of its `onResume()` and `onPause()` methods. The code added is the following:
+
+In the `onCreate()` method from the `MovementSound` class:
+```java
+// Instance of the AccelerometerData class to control the data from the sensors
+acelerometro = new AccelerometerData((SensorManager) getSystemService(SENSOR_SERVICE), this);
+```
+
+The `onResume()` and `onPause()` methods in the `MovementSound` class:
+```java
+// Call accelerometer onResume
+protected void onResume() {
+    super.onResume();
+    acelerometro.onResume();
+}
+
+// Call accelerometer onPause
+protected void onPause() {
+    super.onPause();
+    acelerometro.onPause();
+}
+```
+
+##### Refining
+After some tests, we saw that the sound could repeat thousands of times when the phone moved because of the continuous readings the sensor made.
+
+Then, we decided to play the sound just if 500ms have passed since the last play. For implementing this improvement, little changes have to be done: we have to measure the time and check whether it has passed 500ms.
+
+We declare a variable `long prevTimeSwing;` in the class, initialise to the current time in the `onCreate()` method, `prevTimeSwing = System.currentTimeMillis();` and update the `lightSaberSwing()` method to play the sound just if 500ms have passed:
+
+```java
+// It plays the Swing sound only if 0.5 seconds have passed since the last play
+protected void lightSaberSwing(){
+    // Compute the time difference from the previous play
+    long difference = System.currentTimeMillis() - prevTimeSwing;
+
+    // If the 0.5 seconds have passed, play the sound.
+    if (difference > 500) {
+        prevTimeSwing = System.currentTimeMillis();
+        if(sound_lightSaberSwing.isPlaying()){
+            // Pause the sound and move the pointer to 100ms
+            sound_lightSaberSwing.pause();
+            sound_lightSaberSwing.seekTo(100);
+        }
+        sound_lightSaberSwing.start();
+    }
+}
+```
 
 ## Surprise app
 This app uses a new kind of sensor: the proximity sensor. It completes the MovementSound app adding a way of turning on and off your lightsaber: you just have to get the phone in or off your pocket and the phone will [sound](https://www.freesound.org/people/joe93barlow/sounds/78674/) just like a when a lightsaber is turned on or off in the movies.

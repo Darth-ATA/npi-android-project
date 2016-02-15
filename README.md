@@ -197,9 +197,76 @@ The method that calculate when it is taking the good direction:
 ## QrGPSPoint
 ### App Description
 This app gives you the posibility to provide an Qr code that contains some info, and the user can read the information inside this Qr code.
-For this developemt we decided to use a bridge withing the app and another app that scan the QR code. Using the classes **IntentIntegrator.java** and **IntentResult.java** provided by the library used **ZXing** permits the user scan the desired QR with an external application that he has installed before or the app will claim him to install it.
+
+For this developemt we decided to use a bridge withing the app and another app that scan the QR code. We only have to follow the [android qr scanner example](http://examples.javacodegeeks.com/android/android-barcode-and-qr-scanner-example/) that uses  [ZXing scanning via intent](https://github.com/zxing/zxing/wiki/Scanning-Via-Intent).
+
+### App Implementation
+#### QrGPSPoint
+ - [QRGPSPoint.java](https://github.com/Darth-ATA/npi-android-project/blob/master/NPIToolKit/app/src/main/java/com/alejandros/npitoolkit/QRGPSPoint.java)
+ - [content_qrgpspoint.xml](https://github.com/Darth-ATA/npi-android-project/blob/master/NPIToolKit/app/src/main/res/layout/content_qrgpspoint.xml)
+
+For stat the Qr scan, the user have to touch the button in the screen, then the app will provide the data in text below the button with the code type (we only want scan Qr codes but **ZXing** ables to scan differents codes). In code this is traduced in:
+
+```xml
+<Button android:id="@+id/scan_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="@string/scan_QR"
+        android:onClick="onClick"
+        />
+<TextView
+        android:id="@+id/scan_format"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textIsSelectable="true"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/scan_button"
+        />
+<TextView
+    android:id="@+id/scan_content"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textIsSelectable="true"
+    android:layout_centerHorizontal="true"
+    android:layout_below="@id/scan_format"
+    />
+```
+
+Then when the user touch the button the Qr code scanner app will start using the [IntentIntegrator](https://github.com/Darth-ATA/npi-android-project/blob/master/NPIToolKit/app/src/main/java/com/google/zxing/integration/android/IntentIntegrator.java) and [IntentResult](https://github.com/Darth-ATA/npi-android-project/blob/master/NPIToolKit/app/src/main/java/com/google/zxing/integration/android/IntentResult.java) provided by **ZXing**. Then the information will be showed in the *TextView*. In code this is traduced in:
+
+```java
+    //respond to clicks
+    public void onClick(View view){
+        // claim to zxing app that scan the Qr code
+        IntentIntegrator scanIntegrator = new IntentIntegrator(this);
+        scanIntegrator.initiateScan();
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent intent){
+        //retrieve scan result
+        IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+        if (scanningResult != null){
+            //we have a result and change the TextView with it
+            String scanContent = scanningResult.getContents();
+            String scanFormat = scanningResult.getFormatName();
+
+            formatTxt.setText(getString(R.string.QR_format) + scanFormat);
+            contentTxt.setText(getString(R.string.QR_content) + scanContent);
+        }
+        else{
+            Toast toast = Toast.makeText(getApplicationContext(),
+                    R.string.QR_errorScan, Toast.LENGTH_SHORT);
+            toast.show();
+        }
+    }
+```
 
 ## GesturePhoto
+### App Description
+This app gives you the posibilityof create an lockpatern and when you insert this lockpattern the app will take a photo after 3 seconds.
+
+The lockpattern 
 For this development we decided to use as gesture all the combinations that provides de lockpatern of *Android*. For the lockpattern we use the library of [haibison](https://bitbucket.org/haibison/android-lockpattern/wiki/Quick-Use). After entering the correct lockpattern the app automatically opens a camera preview implemented using the [android development camera tutorial](http://stackoverflow.com/questions/2543059/android-camera-in-portrait-on-surfaceview) unfortunately the tutorial uses a deprecated class.
 
 After three seconds of entering the right pattern, it takes a photo and storage it in the external storage of the phone and the app shows a message indicating where the photo has been placed.
@@ -237,10 +304,6 @@ The implementation is all based on the MovementSound app, we just had to change 
  - [Voice recognition tutorial]( http://www.javacodegeeks.com/2012/08/android-voice-recognition-tutorial.html)
  - [Hoy to check if a string is numeric]( http://stackoverflow.com/questions/1102891/how-to-check-if-a-string-is-numeric-in-java)
  - [Extract numbers from a string]( http://stackoverflow.com/questions/10734989/extract-numbers-from-an-alpha-numeric-string-using-android)
-### QrGPSPoint
-
-- http://examples.javacodegeeks.com/android/android-barcode-and-qr-scanner-example/
-- http://code.tutsplus.com/tutorials/android-sdk-create-a-barcode-reader--mobile-17162
 
 ### Movement sound
 - [Sound 1](https://www.freesound.org/people/joe93barlow/sounds/78674/)
@@ -251,19 +314,6 @@ The implementation is all based on the MovementSound app, we just had to change 
 - https://github.com/zxing/zxing/wiki/Scanning-Via-Intent
 - https://github.com/zxing/zxing
 - https://github.com/journeyapps/zxing-android-embedded#custom-layout
-
-#### SourceForge
-- http://sourceforge.net/p/zbar/news/2012/03/zbar-android-sdk-version-01-released/
-- http://sourceforge.net/projects/zbar/?source=typ_redirect
-
-#### StackOverflow
-- http://stackoverflow.com/questions/16080181/qr-code-reading-with-camera-android
-- http://stackoverflow.com/questions/29159104/how-to-integrate-zxing-barcode-scanner-without-installing-the-actual-zxing-app
-- http://stackoverflow.com/questions/27851512/how-to-integrate-zxing-library-to-android-studio-for-barcode-scanning
-- http://stackoverflow.com/questions/27571530/zxing-scanner-android-studio/27573877#27573877
-- http://stackoverflow.com/questions/16433860/how-to-use-zxing-library-wihtout-installing-barcodescanner-app
-- http://stackoverflow.com/questions/10407159/how-to-manage-startactivityforresult-on-android/10407371#10407371
-- http://stackoverflow.com/a/18459352/3248221
 
 ### GesturePhoto
 

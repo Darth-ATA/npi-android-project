@@ -14,6 +14,7 @@ import com.google.zxing.integration.android.IntentResult;
 public class QRGPSPoint extends AppCompatActivity implements View.OnClickListener {
 
     static final String ACTION_SCAN = "com.google.zxing.client.android.SCAN";
+
     private TextView formatTxt, contentTxt;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -30,7 +31,7 @@ public class QRGPSPoint extends AppCompatActivity implements View.OnClickListene
 
     //respond to clicks
     public void onClick(View view){
-        //scan
+        // claim to zxing app that scan the Qr code
         IntentIntegrator scanIntegrator = new IntentIntegrator(this);
         scanIntegrator.initiateScan();
     }
@@ -39,7 +40,7 @@ public class QRGPSPoint extends AppCompatActivity implements View.OnClickListene
         //retrieve scan result
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         if (scanningResult != null){
-            //we have a result
+            //we have a result and change the TextView with it
             String scanContent = scanningResult.getContents();
             String scanFormat = scanningResult.getFormatName();
 

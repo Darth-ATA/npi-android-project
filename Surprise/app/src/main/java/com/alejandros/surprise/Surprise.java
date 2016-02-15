@@ -1,4 +1,4 @@
-package com.alejandros.npitoolkit;
+package com.alejandros.surprise;
 
 import android.content.Context;
 import android.hardware.Sensor;

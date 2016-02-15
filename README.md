@@ -842,7 +842,7 @@ Before explaining the code, it is necessary to explain the values returned by th
 
 The default behaviour is that the sensor returns the distance between the sensor and the nearest object. However, most of the devices just return two values: one showing that an object is near the sensor and another one, greater, showing that the object is far from the sensor.
 
-After some experiments with different devices, we have found that the lowest value is always under 5.0 and the greatest one is always greater than 10.0. The code uses these values as thresholds to trigger the sound.
+After some experiments with different devices, we have found that the lowest value is always under 5.0 and the greatest one is always greater than 10.0. Furthermore, we cannot rely on the values returned by the methods `getMaximumRange()` and `getResolution()` from `Sensor`, as explained in this [post](http://stackoverflow.com/a/29954988/3248221). The code uses the experimental values as thresholds to trigger the sound, but it could work wrong in some devices.
 
 The idea is that when the user puts the phone in his/her pocket, the sound will play: we have to look for a change from a high value to a low one. When the user puts the phone out his/her pocket, we want the sound also to play, so we have to also look for a change from low to high values.
 

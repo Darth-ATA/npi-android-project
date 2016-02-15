@@ -206,9 +206,16 @@ After three seconds of entering the right pattern, it takes a photo and storage 
 
 
 ## MovementSound
+### App description
 This app tries to imitate the sounds made by a lightsaber in the Star Wars movies. If you move the phone quickly in the X axis; i.e., in the horizontal direction, the phone will [sound](https://www.freesound.org/people/gyzhor/sounds/47125/) just like when a lightsaber swings in the movies.
 
-The sound implementation is inspired by this [StackOverflow answer](http://stackoverflow.com/a/18459352/3248221). The accelerometer management implementation is based on [this code](http://bit.ly/1oBpGDI).
+### App implementation
+#### Sound management
+The sound management, inspired by this [StackOverflow answer](http://stackoverflow.com/a/18459352/3248221), is based on the
+
+#### Movement recognition
+
+. The accelerometer management implementation is based on [this code](http://bit.ly/1oBpGDI).
 
 ## Surprise app
 This app uses a new kind of sensor: the proximity sensor. It completes the MovementSound app adding a way of turning on and off your lightsaber: you just have to get the phone in or off your pocket and the phone will [sound](https://www.freesound.org/people/joe93barlow/sounds/78674/) just like a when a lightsaber is turned on or off in the movies.

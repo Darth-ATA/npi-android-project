@@ -731,7 +731,7 @@ After some tests, we saw that the sound could repeat thousands of times when the
 
 Then, we decided to play the sound just if 500ms have passed since the last play. For implementing this improvement, little changes have to be done: we have to measure the time and check whether it has passed 500ms.
 
-We declare a variable `long prevTimeSwing;` in the class, initialise to the current time in the `onCreate()` method, `prevTimeSwing = System.currentTimeMillis();` and update the `lightSaberSwing()` method to play the sound just if 500ms have passed:
+We declare a variable `long prevTimeSwing;` in the class, initialise to the current time in the `onCreate()` method with `prevTimeSwing = System.currentTimeMillis();` and update the `lightSaberSwing()` method to play the sound just if 500ms have passed:
 
 ```java
 // It plays the Swing sound only if 0.5 seconds have passed since the last play
@@ -753,10 +753,100 @@ protected void lightSaberSwing(){
 ```
 
 ## Surprise app
+### App description
 This app uses a new kind of sensor: the proximity sensor. It completes the MovementSound app adding a way of turning on and off your lightsaber: you just have to get the phone in or off your pocket and the phone will [sound](https://www.freesound.org/people/joe93barlow/sounds/78674/) just like a when a lightsaber is turned on or off in the movies.
 
-The implementation is all based on the MovementSound app, we just had to change the sensor used.
+### App implementation
+The implementation is all based on the MovementSound app. What was before the accelerometer management will be now the proximity sensor management.
 
+#### Proximity sensor management
+The class code structure is exactly the same as in `AccelerometerData`. The sensor management of Android let us use the same code for different sensors. It is then very easy to change the previous code to manage a proximity sensor:
+
+```java
+public class ProximitySensorData implements SensorEventListener {
+    private final SensorManager sensorManager;
+    private final Sensor proxSensor;
+    private final Surprise mainActivity;
+
+    private float[] proxData;
+
+    // Sensor initialization. To be called from Surprise
+    public ProximitySensorData(SensorManager sensorManager, Surprise mainActivity) {
+        this.sensorManager = sensorManager;
+        proxSensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
+        this.mainActivity = mainActivity;
+    }
+
+    protected void onResume() {
+        // Listener to receive the data from the device sensor
+        sensorManager.registerListener(this, proxSensor, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    protected void onPause() {
+        // If the app is not active, stop listening to the sensors
+        sensorManager.unregisterListener(this);
+    }
+
+    // Function called every moment the sensor changes
+    public void onSensorChanged(SensorEvent event) {
+        // Sensor filter: we only want the proxSensor sensor data
+        if (event.sensor.getType() == Sensor.TYPE_PROXIMITY){
+            proxData = event.values;
+        }
+
+        // Only if the data comes from the proxSensor sensor:
+        if ((proxData != null)) {
+            // Update the GUI text with the filtered proxSensor data
+            mainActivity.showText(proxData[0]);
+            mainActivity.manageData(proxData[0]);
+        }
+    }
+
+    // Need to be defined, but not necessary to implement
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+    }
+}
+```
+
+As we can see, we have just changed the type of the sensor when defined in the `onCreate()` method. Now we use `Sensor.TYPE_PROXIMITY` instead of `Sensor.TYPE_ACCELEROMETER`. The remaingin constructor code is exactly the same.
+
+The `onResume()` and `onPause()` methods remain unchanged.
+
+In the code of `onSensorChanged()` we check now whether the data received comes from the proximity sensor. If this is the case, we don't have to do now any data cleaning or refining, so we just call the `showText()` and `manageData()` methods from the main activity; i.e., the `Surprise` class, defined in `Surprise.java` file.
+
+#### Surprise implementation
+The `Surprise` class acts in a similar way to the `MovementSound` one. Now we have to call to the `ProximitySensor` constuctor and change the `manageData()` to use the new kind of data. The code is as follows:
+
+```java
+// It plays the On sound whenever the sensor changes from near to far or viceversa.
+public void manageData(float data) {
+    if (prevData < 5.0 && data > 10.0) {
+        prevData = data;
+        sound_lightSaberOn.start();
+    } else if (prevData > 10.0 && data < 5.0){
+        prevData = data;
+
+        // Changing from far to near => saving phone in pocket => play the sound unless it is
+        // the first time
+        if(firstTime) {
+            firstTime = false;
+        }
+        else{
+            sound_lightSaberOn.start();
+        }
+    }
+}
+```
+
+Before explaining the code, it is necessary to explain the values returned by the sensor, as they change from device to device.
+
+The default behaviour is that the sensor returns the distance between the sensor and the nearest object. However, most of the devices just return two values: one showing that an object is near the sensor and another one, greater, showing that the object is far from the sensor.
+
+After some experiments with different devices, we have found that the lowest value is always under 5.0 and the greatest one is always greater than 10.0. The code uses these values as thresholds to trigger the sound.
+
+The idea is that when the user puts the phone in his/her pocket, the sound will play: we have to look for a change from a high value to a low one. When the user puts the phone out his/her pocket, we want the sound also to play, so we have to also look for a change from low to high values.
+
+Furthermore, we need to manage the first time there is a change in the sensor. We do not want the sound to play whenever the app starts, so we have to isolate the first time when the values change from high to low. This will make the phone to start its normal behaviour only when the phone has been placed in the pocket for the first time.
 
 ## References
 ### Get Started

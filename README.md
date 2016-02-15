@@ -211,6 +211,7 @@ The method that calculate when it is taking the good direction:
 - [Voice recognition tutorial]( http://www.javacodegeeks.com/2012/08/android-voice-recognition-tutorial.html)
 - [Hoy to check if a string is numeric]( http://stackoverflow.com/questions/1102891/how-to-check-if-a-string-is-numeric-in-java)
 - [Extract numbers from a string]( http://stackoverflow.com/questions/10734989/extract-numbers-from-an-alpha-numeric-string-using-android)
+
 ## QrGPSPoint
 ### App Description
 This app gives you the posibility to provide an Qr code that contains some info, and the user can read the information inside this Qr code.
@@ -424,6 +425,8 @@ After 3 seconds the photo has to be taken and storaged int he external storage o
 - [Uri](http://developer.android.com/intl/es/reference/android/net/Uri.html)
 - [SurfaceView](http://developer.android.com/intl/es/reference/android/view/SurfaceView.html)
 - [SurfaceHolder](http://developer.android.com/intl/es/reference/android/view/SurfaceHolder.html)
+- [Android camera Stackoverflow](http://stackoverflow.com/questions/2543059/android-camera-in-portrait-on-surfaceview)
+- [Fix camera orientation Stackoverflow](http://stackoverflow.com/questions/20064793/how-to-fix-camera-orientation)
 
 ## MovementSound
 ### App description
@@ -863,31 +866,9 @@ Furthermore, we need to manage the first time there is a change in the sensor. W
  - [Position sensors](https://developer.android.com/intl/es/guide/topics/sensors/sensors_position.html)
 ### VoiceCompass
 
-
 ### Movement sound
 - [Sound 1](https://www.freesound.org/people/joe93barlow/sounds/78674/)
 - [Accelerometer code](http://bit.ly/1oBpGDI)
-
-#### GitHub
-
-- https://github.com/zxing/zxing/wiki/Scanning-Via-Intent
-- https://github.com/zxing/zxing
-- https://github.com/journeyapps/zxing-android-embedded#custom-layout
-
-### GesturePhoto
-
-
-
-http://stackoverflow.com/questions/3687315/deleting-shared-preferences
-http://stackoverflow.com/questions/8034127/how-to-remove-some-key-value-pair-from-sharedpreferences
-http://developer.android.com/intl/es/training/gestures/index.html
-http://developer.android.com/intl/es/training/gestures/detector.html
-
-http://developer.android.com/intl/es/guide/topics/media/camera.html#custom-camera
-http://stackoverflow.com/questions/9156928/can-error-in-opening-a-camera-be-fixed-in-android
-http://stackoverflow.com/questions/1520887/how-to-pause-sleep-thread-or-process-in-android
-http://stackoverflow.com/questions/2543059/android-camera-in-portrait-on-surfaceview
-http://stackoverflow.com/questions/20064793/how-to-fix-camera-orientation
 
 ## Surprise app
 - [Sound 1](https://www.freesound.org/people/gyzhor/sounds/47125/)

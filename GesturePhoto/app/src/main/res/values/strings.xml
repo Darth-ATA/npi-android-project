@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">GesturePhoto</string>
+    <string name="action_settings">Settings</string>
+    <string name="camera_accesingError">"Error accessing file: "</string>
+    <string name="camera_fileError">"File not found: "</string>
+    <string name="camera_permissionError">"Error creating media file, check storage permissions: "</string>
+    <string name="camera_savedTo">"Image saved in: "</string>
+    <string name="photo_pattern">Pattern:\n</string>
+    <string name="photo_RES_OK">RESULT_OK</string>
+    <string name="photo_RES_CANCEL">RESULT_CANCELED</string>
+    <string name="photo_RES_FAILED">RESULT_FAILED</string>
+    <string name="photo_RES_FORGOT">RESULT_FORGOT_PATTERN</string>
+</resources>

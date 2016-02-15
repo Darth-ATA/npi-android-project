@@ -1,1 +1,1 @@
-include ':app', ':voicecompass'
+include ':app'

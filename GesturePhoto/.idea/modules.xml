@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/GesturePhoto.iml" filepath="$PROJECT_DIR$/GesturePhoto.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file:///mnt/Datos/Documentos/Proyectos/npi-android-project/GesturePhoto/GesturePhoto.iml" filepath="/mnt/Datos/Documentos/Proyectos/npi-android-project/GesturePhoto/GesturePhoto.iml" />
+      <module fileurl="file:///mnt/Datos/Documentos/Proyectos/npi-android-project/GesturePhoto/app/app.iml" filepath="/mnt/Datos/Documentos/Proyectos/npi-android-project/GesturePhoto/app/app.iml" />
     </modules>
   </component>
 </project>

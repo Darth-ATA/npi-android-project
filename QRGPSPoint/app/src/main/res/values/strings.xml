@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">QRGPSPoint</string>
+    <string name="action_settings">Settings</string>
+    <string name="scan_QR">ScanQR</string>
+    <string name="QR_format">"FORMAT: "</string>
+    <string name="QR_content">"CONTENT: "</string>
+    <string name="QR_errorScan">No scan data received!</string>
+</resources>
